@@ -1,15 +1,34 @@
 package co.edu.uptc.models;
 
-import co.edu.uptc.models.Compra;
-import co.edu.uptc.models.Producto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+import java.time.LocalDate;
+
+@Data @AllArgsConstructor @NoArgsConstructor @Builder
+@Entity @Table(name = "productos_compras")
 public class ProductoCompra {
+    @EmbeddedId
+    private ProductoCompraPK primaryKey;
+
+    @ManyToOne @JoinColumn(name = "codigo_producto")
     private Producto producto;
+
+    @ManyToOne @JoinColumn(name = "id_compra") @JsonBackReference
     private Compra compra;
+
+    @Column(name = "precio_producto_compra", nullable = false)
     private double precioProducto;
+
+    @Column(name = "cantidad_producto_compra", nullable = false)
     private int cantidadProducto;
+
+    @JsonFormat(pattern = "YYYY-MM-DD")
+    @Column(name = "fecha_vencimiento_producto_compra", nullable = false)
+    private LocalDate fechaVencimientoProducto;
 }
