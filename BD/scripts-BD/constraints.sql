@@ -122,3 +122,12 @@ BEGIN
         ROLLBACK TRANSACTION
     END
 END
+
+-- trigger para verficar stock
+/*
+CREATE TRIGGER stock_validator ON productos_compras FOR INSERT AS
+BEGIN
+    DECLARE @id_venta AS INT = (SELECT id_venta FROM INSERTED)
+    DECLARE @codigo_producto AS NVARCHAR(255) = (SELECT codigo_producto FROM INSERTED)
+END
+*/
