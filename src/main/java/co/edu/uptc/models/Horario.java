@@ -16,8 +16,8 @@ public class Horario {
     @Column(name = "id_horario",nullable = false)
     private int id;
 
-    @Column(name = "dia_semana_horario", nullable = false, length = 3)
-    private String diaSemana;
+    @Enumerated(EnumType.STRING) @Column(name = "dia_semana_horario", nullable = false, length = 3)
+    private DiaSemana diaSemana;
 
     @JsonFormat(pattern = "HH24:MI:SS")
     @Column(name = "hora_inicio_horario", nullable = false)

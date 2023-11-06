@@ -29,8 +29,8 @@ public class Sujeto {
     @Column(name = "telefono_sujeto", nullable = false, length = 20)
     private String telefono;
 
-    @Column(name = "tipo_sujeto", nullable = false, length = 3)
-    private String tipoSujeto;
+    @Enumerated(EnumType.STRING) @Column(name = "tipo_sujeto", nullable = false, length = 3)
+    private TipoSujeto tipoSujeto;
 
     @Column(name = "direccion_sujeto", length = 50)
     private String direccion;
