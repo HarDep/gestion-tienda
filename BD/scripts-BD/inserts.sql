@@ -29,6 +29,23 @@ INSERT INTO categorias_producto (id_categoria_producto, nombre_categoria_product
 INSERT INTO categorias_producto (id_categoria_producto, nombre_categoria_producto) VALUES (4, 'panes');
 INSERT INTO categorias_producto (id_categoria_producto, nombre_categoria_producto) VALUES (5, 'congelados');
 
+INSERT INTO productos (codigo_producto, id_categoria_producto, nombre_producto, descripcion_producto) VALUES 
+('PR0001', 1, 'salsa de tomate', 'salsa de tomate para consumo');
+INSERT INTO productos (codigo_producto, id_categoria_producto, nombre_producto, descripcion_producto) VALUES 
+('PR0002', 2, 'chorizo aumado', 'chorizo aumado paquete 5 unidades');
+INSERT INTO productos (codigo_producto, id_categoria_producto, nombre_producto, descripcion_producto) VALUES 
+('PR0003', 2, 'jamon iberico', 'jamos iberico 500 gr');
+INSERT INTO productos (codigo_producto, id_categoria_producto, nombre_producto, descripcion_producto) VALUES 
+('PR0004', 3, 'queso mozzarella', 'queso mozzarella 500 gr');
+INSERT INTO productos (codigo_producto, id_categoria_producto, nombre_producto, descripcion_producto) VALUES 
+('PR0005', 3, 'crema de leche', 'crema de leche 250 gr');
+INSERT INTO productos (codigo_producto, id_categoria_producto, nombre_producto, descripcion_producto) VALUES 
+('PR0006', 4, 'pan para hamburguesa', 'pan para hamburguesa paquete 8 unidades');
+INSERT INTO productos (codigo_producto, id_categoria_producto, nombre_producto, descripcion_producto) VALUES 
+('PR0007', 4, 'pan para perro', 'pan para perro paquete 10 unidades');
+INSERT INTO productos (codigo_producto, id_categoria_producto, nombre_producto, descripcion_producto) VALUES 
+('PR0008', 5, 'papa prefritas', 'paquete de papa prefritas');
+
 INSERT INTO lotes (id_lote, fecha_lote) VALUES (1, '2023-11-02');
 INSERT INTO lotes (id_lote, fecha_lote) VALUES (2, '2023-11-01');
 INSERT INTO lotes (id_lote, fecha_lote) VALUES (3, '2023-10-31');
