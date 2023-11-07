@@ -10,6 +10,11 @@ import java.util.List;
 @Repository
 public interface SujetoRepository extends CrudRepository<Sujeto, Integer> {
 
-    @Query(value = "SELECT * FROM sujetos WHERE tipo_sujeto LIKE 'PER'", nativeQuery = true)
+    //query para obtener empleados
+    @Query(value = "SELECT ...", nativeQuery = true)
     List<Sujeto> findEmployees();
+
+    //query para obtener proveedores
+    @Query(value = "SELECT ...", nativeQuery = true)
+    List<Sujeto> findSuppliers();
 }

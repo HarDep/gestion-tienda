@@ -1,10 +1,11 @@
 package co.edu.uptc.services;
 
-import co.edu.uptc.models.Sujeto;
+import co.edu.uptc.dtos.SujetoDTO;
 
 import java.util.List;
 
 public interface SujetoService {
-    List<Sujeto> getAll();
-    List<Sujeto> getEmployees();
+    List<SujetoDTO> getAll();
+    List<SujetoDTO> getEmployees();
+    List<SujetoDTO> getSuppliers();
 }

@@ -99,13 +99,7 @@ END
 
 CREATE TRIGGER ventas_validator ON ventas FOR INSERT AS
 BEGIN
-    DECLARE @id_cliente AS INT = (SELECT id_cliente FROM INSERTED)
     DECLARE @id_empleado AS INT = (SELECT id_empleado FROM INSERTED)
-    IF EXISTS (SELECT * FROM sujetos WHERE id_sujeto = @id_cliente AND direccion_sujeto IS NULL)
-    BEGIN
-        RAISERROR ('Venta no valida por falta de direccion de cliente', 16, 1)
-        ROLLBACK TRANSACTION
-    END
     IF EXISTS (SELECT * FROM sujetos WHERE id_sujeto = @id_empleado AND tipo_sujeto NOT LIKE 'PER')
     BEGIN
         RAISERROR ('Venta no valida por empleado no valido', 16, 1)
