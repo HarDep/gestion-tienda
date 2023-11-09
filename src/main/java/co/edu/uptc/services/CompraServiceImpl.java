@@ -71,6 +71,12 @@ public class CompraServiceImpl implements CompraService {
         return productos.stream().map(prod -> mapperService.toProductoProveedorDTO(prod)).toList();
     }
 
+    //obtener todos los lotes
+    @Override
+    public List<Lote> getAllLotes() {
+        return loteRepository.findAll();
+    }
+
     private ProductoCompraDTO saveProductoCompra(ProductoCompraDTO prod, int compraId){
         ProductoCompra productoCompra = mapperService.toProductoCompra(prod,compraId);
         ProductoCompra guardado = productoCompraRepository.save(productoCompra);
