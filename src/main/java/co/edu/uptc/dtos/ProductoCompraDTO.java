@@ -7,10 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
-public class ProductoDTO {
+public class ProductoCompraDTO {
     @NotEmpty @Size(min = 5,message = "El codigo de producto debe tener entre 5 y 255 caracteres",max = 255)
     private String codigo;
     private String categoria;
@@ -20,5 +18,10 @@ public class ProductoDTO {
     private int cantidad;
     @NotEmpty
     private double precio;
-    private LocalDate fechaVencimiento;
+    @NotEmpty
+    private int diaVencimiento;
+    @NotEmpty
+    private int mesVencimiento;
+    @NotEmpty
+    private int anioVencimiento;
 }

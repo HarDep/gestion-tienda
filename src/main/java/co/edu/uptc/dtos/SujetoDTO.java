@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class SujetoDTO {
-    @NotEmpty
-    private int idPersona;
-    @NotEmpty
+    private int idSujeto;
     private TipoSujeto tipoSujeto;
     private String municipio;
     private String nombre;

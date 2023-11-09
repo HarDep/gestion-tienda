@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,11 +26,11 @@ public class Venta {
 
     @JsonFormat(pattern = "YYYY-MM-DD HH24:MI:SS")
     @Column(name = "fecha_hora_venta", nullable = false)
-    private LocalDate fechaVenta;
+    private LocalDateTime fechaVenta;
 
     @JsonFormat(pattern = "YYYY-MM-DD HH24:MI:SS")
     @Column(name = "fecha_hora_entrega_venta")
-    private LocalDate fechaEntrega;
+    private LocalDateTime fechaEntrega;
 
     @Column(name = "precio_entrega_venta")
     private double precioEntrega;

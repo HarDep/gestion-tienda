@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface SujetoService {
     List<SujetoDTO> getAll();
-    List<SujetoDTO> getEmployees();
+    List<SujetoDTO> getSellers();
     List<SujetoDTO> getSuppliers();
 }

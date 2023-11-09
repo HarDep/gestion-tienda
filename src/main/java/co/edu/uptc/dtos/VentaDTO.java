@@ -1,20 +1,21 @@
 package co.edu.uptc.dtos;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class VentaDTO {
-    @NotEmpty
+    private int id;
     private SujetoDTO cliente;
-    @NotEmpty
     private SujetoDTO empleado;
-    @NotEmpty
-    private List<ProductoDTO> productos;
+    private LocalDateTime fecha;
+    @NotNull
+    private List<ProductoVentaDTO> productos;
     private double precioEntrega;
 }
