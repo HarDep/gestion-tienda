@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  app-gestion-tienda:
+    container_name: app-gestion-tienda
+    image: app-gestion-tienda
+    restart: always
+    build: .
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_DRIVER=${DATABASE_DRIVER}
+      - DATABASE_DIALECT=${DATABASE_DIALECT}
+    env_file:
+      - .env
