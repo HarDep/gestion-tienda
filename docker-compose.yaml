@@ -8,6 +8,7 @@ services:
     ports:
       - ${PORT}:${PORT}
     environment:
+      - PORT=${PORT}
       - DATABASE_URL=${DATABASE_URL}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
