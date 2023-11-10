@@ -73,8 +73,9 @@ public class CompraServiceImpl implements CompraService {
 
     //obtener todos los lotes
     @Override
-    public List<Lote> getAllLotes() {
-        return loteRepository.findAll();
+    public List<LoteDTO> getAllLotes() {
+        List<Lote> lotes = loteRepository.findAll();
+        return lotes.stream().map(lote -> mapperService.toLoteDTO(lote)).toList();
     }
 
     private ProductoCompraDTO saveProductoCompra(ProductoCompraDTO prod, int compraId){

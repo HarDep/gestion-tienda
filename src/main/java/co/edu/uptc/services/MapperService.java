@@ -16,4 +16,5 @@ public interface MapperService {
     ProductoVenta toProductoVenta(ProductoVentaDTO prod, int ventaId);
     ProductoCompraDTO toProductoCompraDTO(Producto producto, ProductoCompra productoCompra);
     ProductoVentaDTO toProductoVentaDTO(Producto producto, ProductoVenta productoVenta);
+    LoteDTO toLoteDTO(Lote lote);
 }

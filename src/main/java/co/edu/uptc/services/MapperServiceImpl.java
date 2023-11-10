@@ -96,4 +96,8 @@ public class MapperServiceImpl implements MapperService{
                 .cantidad(productoVenta.getCantidadProducto()).precio(productoVenta.getPrecioProducto())
                 .build();
     }
+
+    public LoteDTO toLoteDTO(Lote lote){
+        return LoteDTO.builder().id(lote.getId()).fecha(lote.getFechaLote()).build();
+    }
 }
