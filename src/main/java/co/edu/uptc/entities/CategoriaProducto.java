@@ -1,4 +1,4 @@
-package co.edu.uptc.models;
+package co.edu.uptc.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
-@Entity @Table(name = "roles_empleado")
-public class RolEmpleado {
+@Entity @Table(name = "categorias_producto")
+public class CategoriaProducto {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_rol_empleado",nullable = false)
+    @Column(name = "id_categoria_producto",nullable = false)
     private int id;
 
-    @Column(name = "nombre_rol_empleado", nullable = false, length = 50)
-    private int nombre;
+    @Column(name = "nombre_categoria_producto", nullable = false, length = 50)
+    private String nombre;
 }

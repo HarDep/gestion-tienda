@@ -1,7 +1,7 @@
 package co.edu.uptc.services;
 
 import co.edu.uptc.dtos.SujetoDTO;
-import co.edu.uptc.models.Sujeto;
+import co.edu.uptc.entities.Sujeto;
 import co.edu.uptc.repositories.SujetoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

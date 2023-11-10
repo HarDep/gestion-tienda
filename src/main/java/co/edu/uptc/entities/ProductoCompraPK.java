@@ -1,4 +1,4 @@
-package co.edu.uptc.models;
+package co.edu.uptc.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 @Embeddable
-public class EmpleadoRolPK {
-    @Column(name = "id_empleado", nullable = false)
-    private int empleadoId;
+public class ProductoCompraPK {
+    @Column(name = "codigo_producto", nullable = false)
+    private String codigoProducto;
 
-    @Column(name = "id_rol_empleado", nullable = false)
-    private int rolId;
+    @Column(name = "id_compra", nullable = false)
+    private int compraId;
 }

@@ -1,4 +1,4 @@
-package co.edu.uptc.models;
+package co.edu.uptc.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -35,6 +35,6 @@ public class Venta {
     @Column(name = "precio_entrega_venta")
     private double precioEntrega;
 
-    @OneToMany(mappedBy = "ventas", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "ventas", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @Builder.Default
     private Set<ProductoVenta> productos = new HashSet<>();
 }

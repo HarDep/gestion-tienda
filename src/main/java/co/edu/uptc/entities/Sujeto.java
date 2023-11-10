@@ -1,4 +1,4 @@
-package co.edu.uptc.models;
+package co.edu.uptc.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,9 +41,9 @@ public class Sujeto {
     @Column(name = "nit_empresa")
     private String nit;
 
-    @OneToMany(mappedBy = "sujetos", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sujetos", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @Builder.Default
     private Set<EmpleadoRol> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "sujetos", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sujetos", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @Builder.Default
     private Set<EmpleadoHorario> horarios = new HashSet<>();
 }

@@ -1,12 +1,11 @@
 package co.edu.uptc.services;
 
 import co.edu.uptc.dtos.*;
-import co.edu.uptc.models.*;
+import co.edu.uptc.entities.*;
 import co.edu.uptc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package co.edu.uptc.models;
+package co.edu.uptc.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

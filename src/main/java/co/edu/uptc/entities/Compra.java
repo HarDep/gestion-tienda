@@ -1,4 +1,4 @@
-package co.edu.uptc.models;
+package co.edu.uptc.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -28,6 +28,6 @@ public class Compra {
     @Column(name = "fecha_hora_compra", nullable = false)
     private LocalDateTime fecha;
 
-    @OneToMany(mappedBy = "compras", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "compras", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @Builder.Default
     private Set<ProductoCompra> productos = new HashSet<>();
 }

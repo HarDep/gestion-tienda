@@ -1,4 +1,4 @@
-package co.edu.uptc.models;
+package co.edu.uptc.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -8,17 +8,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
-@Entity @Table(name = "empleados_roles")
-public class EmpleadoRol {
+@Entity @Table(name = "empleados_horarios")
+public class EmpleadoHorario {
     @EmbeddedId
-    private EmpleadoRolPK primaryKey;
+    private EmpleadoHorarioPK primaryKey;
 
     @ManyToOne @JoinColumn(name = "id_empleado") @JsonBackReference
     private Sujeto empleado;
 
-    @ManyToOne @JoinColumn(name = "id_rol_empleado")
-    private RolEmpleado rol;
+    @ManyToOne @JoinColumn(name = "id_horario")
+    private Horario horario;
 
-    @Column(name = "es_activo_empleado_rol", nullable = false)
+    @Column(name = "es_activo_empleado_horario", nullable = false)
     private Boolean esActivo;
 }

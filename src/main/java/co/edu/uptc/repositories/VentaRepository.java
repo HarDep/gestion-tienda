@@ -1,6 +1,6 @@
 package co.edu.uptc.repositories;
 
-import co.edu.uptc.models.Venta;
+import co.edu.uptc.entities.Venta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

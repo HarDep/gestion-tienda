@@ -1,7 +1,6 @@
 package co.edu.uptc.dtos;
 
-import co.edu.uptc.models.TipoSujeto;
-import jakarta.validation.constraints.NotEmpty;
+import co.edu.uptc.entities.TipoSujeto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

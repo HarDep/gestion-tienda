@@ -1,7 +1,7 @@
 package co.edu.uptc.services;
 
 import co.edu.uptc.dtos.*;
-import co.edu.uptc.models.*;
+import co.edu.uptc.entities.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

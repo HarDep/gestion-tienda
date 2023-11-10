@@ -1,7 +1,7 @@
 package co.edu.uptc.repositories;
 
-import co.edu.uptc.models.ProductoProveedor;
-import co.edu.uptc.models.ProductoProveedorPK;
+import co.edu.uptc.entities.ProductoProveedor;
+import co.edu.uptc.entities.ProductoProveedorPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

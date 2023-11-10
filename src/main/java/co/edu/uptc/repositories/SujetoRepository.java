@@ -1,6 +1,6 @@
 package co.edu.uptc.repositories;
 
-import co.edu.uptc.models.Sujeto;
+import co.edu.uptc.entities.Sujeto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
