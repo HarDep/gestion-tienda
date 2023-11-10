@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface ProductoProveedorRepository extends JpaRepository<ProductoProveedor, ProductoProveedorPK> {
     //query para obtener los productos de un proveedor
-    @Query(value = "SELECT ... WHERE id_proveedor = :supplierId", nativeQuery = true)
+    @Query(value = "SELECT * FROM productos_proveedores WHERE id_proveedor = :supplierId", nativeQuery = true)
     List<ProductoProveedor> getSupplierProducts(@Param("supplierId") int supplierId);
 }

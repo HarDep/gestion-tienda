@@ -37,7 +37,8 @@ public class VentaServiceImpl implements VentaService{
      * @param idCliente id del cliente de la venta
      * @param idEmpleado id del empleado de la venta
      * @return La venta guardada, si retorna Optional empty es porque no existe cliente,
-     * o no existe o está atendiendo el empleado, o no existen al menos un producto
+     * o no existe o está atendiendo el empleado, o no existen al menos un producto,
+     * o algún producto tiene una cantidad que supera las disponibles de ese mismo
      */
     @Override
     public Optional<VentaDTO> save(VentaDTO venta, int idCliente, int idEmpleado) {
@@ -50,6 +51,13 @@ public class VentaServiceImpl implements VentaService{
         }
         //¿descalificamos la venta de una o solo quitamos los que no existen?
         if (venta.getProductos().stream().anyMatch(prod -> !productoRepository.existsById(prod.getCodigo()))){
+            return Optional.empty();
+        }
+        //verificar cantidad de productos con el stock
+        List<ProductoVenta> stock = productoVentaRepository.getStock();
+        if(venta.getProductos().stream().anyMatch(prod -> stock.stream().anyMatch(stProd ->
+                stProd.getProducto().getCodigo().equals(prod.getCodigo()) &&
+                        prod.getCantidad() > stProd.getCantidadProducto()))){
             return Optional.empty();
         }
         Venta venta1 = mapperService.toVenta(idCliente, idEmpleado);

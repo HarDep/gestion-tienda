@@ -81,15 +81,15 @@ VALUES (11, 'empleado6', '3128577707', 'PER', 'apellido6', '223331');
 INSERT INTO sujetos (id_sujeto, nombre_sujeto, telefono_sujeto, tipo_sujeto, apellido_persona, numero_documento_persona) 
 VALUES (12, 'empleado7', '3129577757', 'PER', 'apellido7', '123339');
 INSERT INTO sujetos (id_sujeto, nombre_sujeto, telefono_sujeto, tipo_sujeto, apellido_persona, numero_documento_persona) 
-VALUES (13, 'pepito', '3128577757', 'PER', 'apellido8', '122331');
+VALUES (13, 'pepito', '3128556757', 'PER', 'apellido8', '122331');
 INSERT INTO sujetos (id_sujeto, nombre_sujeto, telefono_sujeto, tipo_sujeto, apellido_persona, numero_documento_persona) 
-VALUES (14, 'pepito', '3128577757', 'PER', 'apellido9', '123371');
+VALUES (14, 'pepito', '3128577897', 'PER', 'apellido9', '123371');
 INSERT INTO sujetos (id_sujeto, nombre_sujeto, telefono_sujeto, tipo_sujeto, apellido_persona, numero_documento_persona) 
-VALUES (15, 'pepito', '3128577757', 'PER', 'apellido10', '903331');
+VALUES (15, 'pepito', '3128589957', 'PER', 'apellido10', '903331');
 INSERT INTO sujetos (id_sujeto, nombre_sujeto, telefono_sujeto, tipo_sujeto, apellido_persona, numero_documento_persona) 
-VALUES (16, 'pepito', '3128577757', 'PER', 'apellido11', '129131');
+VALUES (16, 'pepito', '3122337757', 'PER', 'apellido11', '129131');
 INSERT INTO sujetos (id_sujeto, nombre_sujeto, telefono_sujeto, tipo_sujeto, apellido_persona, numero_documento_persona) 
-VALUES (17, 'pepito', '3128577757', 'PER', 'apellido12', '123390');
+VALUES (17, 'pepito', '3456577757', 'PER', 'apellido12', '123390');
 
 INSERT INTO empleados_roles (id_empleado, id_rol_empleado, es_activo_empleado_rol) VALUES (6,1,1);
 INSERT INTO empleados_roles (id_empleado, id_rol_empleado, es_activo_empleado_rol) VALUES (6,3,1);
@@ -128,9 +128,9 @@ INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_hora
 INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (12,10,1);
 INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (11,10,1);
 INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (8,10,1);
-INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (11,10,1);
-INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (10,11,1);
 INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (11,11,1);
+INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (10,11,1);
+INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (11,12,1);
 INSERT INTO empleados_horarios (id_empleado, id_horario, es_activo_empleado_horario) VALUES (12,12,1);
 
 INSERT INTO productos_proveedores (codigo_producto, id_proveedor, precio_producto_proveedor) VALUES ('PR0001',3, 1.1);

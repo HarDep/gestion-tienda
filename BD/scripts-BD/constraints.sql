@@ -8,12 +8,13 @@ ALTER TABLE sujetos ADD
     CONSTRAINT pk_sujetos PRIMARY KEY (id_sujeto),
     CONSTRAINT fk_sujetos_mun FOREIGN KEY (id_municipio) REFERENCES municipios (id_municipio),
     CONSTRAINT unq_sujetos_tel UNIQUE (telefono_sujeto),
-    CONSTRAINT unq_sujetos_nit UNIQUE (nit_empresa),
-    CONSTRAINT unq_sujetos_doc UNIQUE (numero_documento_persona),
     CONSTRAINT chk_sujetos_tipo CHECK (tipo_sujeto IN ('EMP', 'PER', 'MEE')),
     CONSTRAINT chk_sujetos_atrib CHECK (
         (tipo_sujeto IN ('PER') AND apellido_persona IS NOT NULL AND numero_documento_persona IS NOT NULL) OR
         (tipo_sujeto IN ('EMP') AND nit_empresa IS NOT NULL) OR tipo_sujeto IN ('MEE'));
+
+CREATE UNIQUE NONCLUSTERED INDEX unq_sujetos_nit ON sujetos (nit_empresa) WHERE nit_empresa IS NOT NULL;
+CREATE UNIQUE NONCLUSTERED INDEX unq_sujetos_doc ON sujetos (numero_documento_persona) WHERE numero_documento_persona IS NOT NULL;
 
 ALTER TABLE empleados_roles ADD
     CONSTRAINT pk_emplsrols PRIMARY KEY (id_empleado, id_rol_empleado),

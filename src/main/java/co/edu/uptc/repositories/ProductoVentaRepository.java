@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface ProductoVentaRepository extends JpaRepository<ProductoVenta, ProductoVentaPK> {
     //obtener el stock de productos
-    @Query(value = "SELECT ...", nativeQuery = true)
+    @Query(value = "...", nativeQuery = true)
     List<ProductoVenta> getStock();
 }
