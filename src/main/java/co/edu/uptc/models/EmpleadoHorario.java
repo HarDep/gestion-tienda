@@ -20,5 +20,5 @@ public class EmpleadoHorario {
     private Horario horario;
 
     @Column(name = "es_activo_empleado_horario", nullable = false)
-    private boolean esActivo;
+    private Boolean esActivo;
 }

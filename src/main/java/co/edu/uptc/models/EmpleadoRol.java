@@ -20,5 +20,5 @@ public class EmpleadoRol {
     private RolEmpleado rol;
 
     @Column(name = "es_activo_empleado_rol", nullable = false)
-    private boolean esActivo;
+    private Boolean esActivo;
 }
