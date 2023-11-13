@@ -28,6 +28,6 @@ public class Compra {
     @Column(name = "fecha_hora_compra", nullable = false)
     private LocalDateTime fecha;
 
-    @OneToMany(mappedBy = "compras", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @Builder.Default
+    @OneToMany(mappedBy = "compras", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<ProductoCompra> productos = new HashSet<>();
 }

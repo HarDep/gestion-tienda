@@ -35,6 +35,6 @@ public class Venta {
     @Column(name = "precio_entrega_venta")
     private double precioEntrega;
 
-    @OneToMany(mappedBy = "ventas", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @Builder.Default
+    @OneToMany(mappedBy = "ventas", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<ProductoVenta> productos = new HashSet<>();
 }

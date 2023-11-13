@@ -1,7 +1,7 @@
 package co.edu.uptc.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class ProductoCompra {
     @ManyToOne @JoinColumn(name = "codigo_producto")
     private Producto producto;
 
-    @ManyToOne @JoinColumn(name = "id_compra") @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "id_compra", nullable = false)
     private Compra compra;
 
     @Column(name = "precio_producto_compra", nullable = false)
