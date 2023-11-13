@@ -55,8 +55,9 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public SujetoDTO toSujetoDTO(Sujeto sujeto){
+        String mun = sujeto.getMunicipio() == null ? null : sujeto.getMunicipio().getNombre();
         return SujetoDTO.builder().idSujeto(sujeto.getId()).tipoSujeto(sujeto.getTipoSujeto())
-                .municipio(sujeto.getMunicipio().getNombre()).nombre(sujeto.getNombre())
+                .municipio(mun).nombre(sujeto.getNombre())
                 .apellido(sujeto.getApellido()).telefono(sujeto.getTelefono()).direccion(sujeto.getDireccion())
                 .numeroDoc(sujeto.getNumeroDocumento()).nit(sujeto.getNit()).build();
     }
@@ -84,13 +85,15 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public ProductoCompraDTO toProductoCompraDTO(Producto producto, ProductoCompra productoCompra) {
-        LocalDate fechaVencimiento = productoCompra.getFechaVencimientoProducto();
+        LocalDate fechaVencimiento = productoCompra.getFechaVencimientoProducto() == null ? null :
+                productoCompra.getFechaVencimientoProducto();
         return ProductoCompraDTO.builder().codigo(producto.getCodigo())
                 .nombre(producto.getNombre()).categoria(producto.getCategoria().getNombre())
                 .descripcion(producto.getDescripcion()).cantidad(productoCompra.getCantidadProducto())
-                .precio(productoCompra.getPrecioProducto()).anioVencimiento(fechaVencimiento.getYear())
-                .mesVencimiento(fechaVencimiento.getMonthValue())
-                .diaVencimiento(fechaVencimiento.getDayOfMonth()).build();
+                .precio(productoCompra.getPrecioProducto()).anioVencimiento(fechaVencimiento != null?
+                        fechaVencimiento.getYear() : -1)
+                .mesVencimiento(fechaVencimiento != null? fechaVencimiento.getMonthValue() : -1)
+                .diaVencimiento(fechaVencimiento != null? fechaVencimiento.getDayOfMonth() : -1).build();
     }
 
     @Override
