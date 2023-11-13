@@ -56,7 +56,7 @@ public class VentaServiceImpl implements VentaService{
         //verificar cantidad de productos con el stock
         List<ProductoVenta> stock = productoVentaRepository.getStock();
         if(venta.getProductos().stream().anyMatch(prod -> stock.stream().anyMatch(stProd ->
-                stProd.getProducto().getCodigo().equals(prod.getCodigo()) &&
+                stProd.getPrimaryKey().getProducto().getCodigo().equals(prod.getCodigo()) &&
                         prod.getCantidad() > stProd.getCantidadProducto()))){
             return Optional.empty();
         }
@@ -75,7 +75,7 @@ public class VentaServiceImpl implements VentaService{
     public List<ProductoVentaDTO> getStock() {
         List<ProductoVenta> productos = productoVentaRepository.getStock();
         return productos.stream().map(prod -> {
-            Producto producto = prod.getProducto();
+            Producto producto = prod.getPrimaryKey().getProducto();
             return mapperService.toProductoVentaDTO(producto,prod);
         }).toList();
     }
@@ -83,7 +83,7 @@ public class VentaServiceImpl implements VentaService{
     private ProductoVentaDTO saveProductoVenta(ProductoVentaDTO prod, int ventaId) {
         ProductoVenta productoVenta = mapperService.toProductoVenta(prod,ventaId);
         ProductoVenta guardado = productoVentaRepository.save(productoVenta);
-        Producto producto = guardado.getProducto();
+        Producto producto = guardado.getPrimaryKey().getProducto();
         return mapperService.toProductoVentaDTO(producto,guardado);
     }
 }

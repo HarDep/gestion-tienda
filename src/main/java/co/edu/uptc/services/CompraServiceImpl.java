@@ -80,7 +80,7 @@ public class CompraServiceImpl implements CompraService {
     private ProductoCompraDTO saveProductoCompra(ProductoCompraDTO prod, int compraId){
         ProductoCompra productoCompra = mapperService.toProductoCompra(prod,compraId);
         ProductoCompra guardado = productoCompraRepository.save(productoCompra);
-        Producto producto = guardado.getProducto();
+        Producto producto = guardado.getPrimaryKey().getProducto();
         return mapperService.toProductoCompraDTO(producto,guardado);
     }
 }

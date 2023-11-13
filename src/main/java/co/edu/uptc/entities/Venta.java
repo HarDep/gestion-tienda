@@ -18,10 +18,10 @@ public class Venta {
     @Column(name = "id_venta",nullable = false)
     private int id;
 
-    @ManyToOne @JoinColumn(name = "id_cliente")
+    @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id_sujeto")
     private Sujeto cliente;
 
-    @ManyToOne @JoinColumn(name = "id_empleado")
+    @ManyToOne @JoinColumn(name = "id_empleado", referencedColumnName = "id_sujeto")
     private Sujeto empleado;
 
     @JsonFormat(pattern = "YYYY-MM-DD HH24:MI:SS")
@@ -35,6 +35,8 @@ public class Venta {
     @Column(name = "precio_entrega_venta")
     private double precioEntrega;
 
-    @OneToMany(mappedBy = "ventas", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<ProductoVenta> productos = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "productos_ventas", joinColumns = @JoinColumn(name = "id_venta", referencedColumnName = "id_venta"),
+            inverseJoinColumns = @JoinColumn(name = "codigo_producto", referencedColumnName = "codigo_producto"))
+    private Set<Producto> productos = new HashSet<>();
 }

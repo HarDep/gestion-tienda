@@ -12,8 +12,8 @@ import java.util.List;
 public class MapperServiceImpl implements MapperService{
     @Override
     public ProductoProveedorDTO toProductoProveedorDTO(ProductoProveedor prod) {
-        SujetoDTO proveedor = toSujetoDTO(prod.getProveedor());
-        Producto producto = prod.getProducto();
+        SujetoDTO proveedor = toSujetoDTO(prod.getPrimaryKey().getProveedor());
+        Producto producto = prod.getPrimaryKey().getProducto();
         return ProductoProveedorDTO.builder().proveedor(proveedor).codigoProducto(producto.getCodigo())
                 .nombreProducto(producto.getNombre()).categoriaProducto(producto.getCategoria().getNombre())
                 .descripcionProducto(producto.getDescripcion()).precio(prod.getPrecioProducto()).build();
@@ -65,7 +65,9 @@ public class MapperServiceImpl implements MapperService{
     public ProductoCompra toProductoCompra(ProductoCompraDTO prod, int compraId) {
         LocalDate fechaVencimiento = LocalDate.of(prod.getAnioVencimiento(),prod.getMesVencimiento(),
                 prod.getDiaVencimiento());
-        ProductoCompraPK primaryKey = ProductoCompraPK.builder().compraId(compraId).codigoProducto(prod.getCodigo()).build();
+        Producto producto = Producto.builder().codigo(prod.getCodigo()).build();
+        Compra compra = Compra.builder().id(compraId).build();
+        ProductoCompraPK primaryKey = ProductoCompraPK.builder().compra(compra).producto(producto).build();
         return ProductoCompra.builder().primaryKey(primaryKey)
                 .precioProducto(prod.getPrecio()).cantidadProducto(prod.getCantidad())
                 .fechaVencimientoProducto(fechaVencimiento).build();
@@ -73,7 +75,9 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public ProductoVenta toProductoVenta(ProductoVentaDTO prod, int ventaId) {
-        ProductoVentaPK primaryKey = ProductoVentaPK.builder().ventaId(ventaId).codigoProducto(prod.getCodigo()).build();
+        Venta venta = Venta.builder().id(ventaId).build();
+        Producto producto = Producto.builder().codigo(prod.getCodigo()).build();
+        ProductoVentaPK primaryKey = ProductoVentaPK.builder().venta(venta).producto(producto).build();
         return ProductoVenta.builder().primaryKey(primaryKey).precioProducto(prod.getPrecio())
                 .cantidadProducto(prod.getCantidad()).build();
     }

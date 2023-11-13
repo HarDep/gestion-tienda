@@ -17,7 +17,7 @@ public class Sujeto {
     @Column(name = "id_sujeto",nullable = false)
     private int id;
 
-    @ManyToOne @JoinColumn(name = "id_municipio")
+    @ManyToOne @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
     private Municipio municipio;
 
     @Column(name = "nombre_sujeto", nullable = false, length = 50)
@@ -41,9 +41,13 @@ public class Sujeto {
     @Column(name = "nit_empresa")
     private String nit;
 
-    @OneToMany(mappedBy = "sujetos", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @Builder.Default
-    private Set<EmpleadoRol> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "empleados_roles", joinColumns = @JoinColumn(name = "id_empleado", referencedColumnName = "id_sujeto"),
+            inverseJoinColumns = @JoinColumn(name = "id_rol_empleado", referencedColumnName = "id_rol_empleado"))
+    private Set<RolEmpleado> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "sujetos", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @Builder.Default
-    private Set<EmpleadoHorario> horarios = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "empleados_horarios", joinColumns = @JoinColumn(name = "id_empleado", referencedColumnName = "id_sujeto"),
+            inverseJoinColumns = @JoinColumn(name = "id_horario", referencedColumnName = "id_horario"))
+    private Set<Horario> horarios = new HashSet<>();
 }

@@ -13,12 +13,6 @@ public class ProductoVenta {
     @EmbeddedId
     private ProductoVentaPK primaryKey;
 
-    @ManyToOne @JoinColumn(name = "codigo_producto")
-    private Producto producto;
-
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "id_venta",nullable = false)
-    private Venta venta;
-
     @Column(name = "precio_producto_venta", nullable = false)
     private double precioProducto;
 

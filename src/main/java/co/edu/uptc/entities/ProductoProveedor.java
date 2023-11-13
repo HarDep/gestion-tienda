@@ -12,12 +12,6 @@ public class ProductoProveedor {
     @EmbeddedId
     private ProductoProveedorPK primaryKey;
 
-    @ManyToOne @JoinColumn(name = "codigo_producto")
-    private Producto producto;
-
-    @ManyToOne @JoinColumn(name = "id_proveedor")
-    private Sujeto proveedor;
-
     @Column(name = "precio_producto_proveedor", nullable = false)
     private double precioProducto;
 }

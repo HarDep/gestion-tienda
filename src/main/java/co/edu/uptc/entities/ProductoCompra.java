@@ -16,12 +16,6 @@ public class ProductoCompra {
     @EmbeddedId
     private ProductoCompraPK primaryKey;
 
-    @ManyToOne @JoinColumn(name = "codigo_producto")
-    private Producto producto;
-
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "id_compra", nullable = false)
-    private Compra compra;
-
     @Column(name = "precio_producto_compra", nullable = false)
     private double precioProducto;
 

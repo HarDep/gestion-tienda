@@ -1,7 +1,8 @@
 package co.edu.uptc.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +11,11 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 @Embeddable
 public class EmpleadoHorarioPK {
-    @Column(name = "id_empleado", nullable = false)
-    private int empleadoId;
 
-    @Column(name = "id_horario", nullable = false)
-    private int horarioId;
+    @ManyToOne
+    @JoinColumn(name = "id_empleado",referencedColumnName = "id_sujeto",nullable = false)
+    private Sujeto empleado;
+
+    @ManyToOne @JoinColumn(name = "id_horario",referencedColumnName = "id_horario",nullable = false)
+    private Horario horario;
 }

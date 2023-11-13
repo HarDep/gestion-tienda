@@ -1,6 +1,5 @@
 package co.edu.uptc.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +11,6 @@ import lombok.NoArgsConstructor;
 public class EmpleadoHorario {
     @EmbeddedId
     private EmpleadoHorarioPK primaryKey;
-
-    @ManyToOne @JoinColumn(name = "id_empleado") @JsonBackReference
-    private Sujeto empleado;
-
-    @ManyToOne @JoinColumn(name = "id_horario")
-    private Horario horario;
 
     @Column(name = "es_activo_empleado_horario", nullable = false)
     private Boolean esActivo;
