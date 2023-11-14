@@ -2,6 +2,11 @@ package co.edu.uptc.services;
 
 import co.edu.uptc.dtos.*;
 import co.edu.uptc.entities.*;
+import co.edu.uptc.repositories.CategoriaProductoRepository;
+import co.edu.uptc.repositories.LoteRepository;
+import co.edu.uptc.repositories.ProductoRepository;
+import co.edu.uptc.repositories.SujetoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -10,6 +15,14 @@ import java.util.List;
 
 @Service
 public class MapperServiceImpl implements MapperService{
+    @Autowired
+    private ProductoRepository productoRepository;
+    @Autowired
+    private CategoriaProductoRepository categoriaProductoRepository;
+    @Autowired
+    private LoteRepository loteRepository;
+    @Autowired
+    private SujetoRepository sujetoRepository;
     @Override
     public ProductoProveedorDTO toProductoProveedorDTO(ProductoProveedor prod) {
         SujetoDTO proveedor = toSujetoDTO(prod.getPrimaryKey().getProveedor());
@@ -35,9 +48,9 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public CompraDTO toCompraDTO(Compra compra, List<ProductoCompraDTO> productos) {
-        Lote lote1 = compra.getLote();
+        Lote lote1 = loteRepository.findById(compra.getLote().getId()).orElse(new Lote());
         LoteDTO lote = LoteDTO.builder().id(lote1.getId()).fecha(lote1.getFechaLote()).build();
-        Sujeto sujeto1 = compra.getProveedor();
+        Sujeto sujeto1 = sujetoRepository.findById(compra.getProveedor().getId()).orElse(new Sujeto());
         SujetoDTO sujeto = toSujetoDTO(sujeto1);
         return CompraDTO.builder().id(compra.getId()).lote(lote).proveedor(sujeto)
                 .fecha(compra.getFecha()).productos(productos).build();
@@ -45,9 +58,9 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public VentaDTO toVentaDTO(Venta venta, List<ProductoVentaDTO> productos) {
-        Sujeto cliente1 = venta.getCliente();
+        Sujeto cliente1 = sujetoRepository.findById(venta.getCliente().getId()).orElse(new Sujeto());
         SujetoDTO cliente = toSujetoDTO(cliente1);
-        Sujeto empleado1 = venta.getEmpleado();
+        Sujeto empleado1 = sujetoRepository.findById(venta.getEmpleado().getId()).orElse(new Sujeto());
         SujetoDTO empleado = toSujetoDTO(empleado1);
         return VentaDTO.builder().id(venta.getId()).cliente(cliente).empleado(empleado)
                 .fecha(venta.getFechaVenta()).productos(productos).build();
@@ -85,11 +98,14 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public ProductoCompraDTO toProductoCompraDTO(Producto producto, ProductoCompra productoCompra) {
+        Producto producto1 = productoRepository.findById(producto.getCodigo()).orElse(new Producto());
+        CategoriaProducto categoriaProducto = categoriaProductoRepository.findById(producto1.getCategoria()
+                        .getId()).orElse(new CategoriaProducto());
         LocalDate fechaVencimiento = productoCompra.getFechaVencimientoProducto() == null ? null :
                 productoCompra.getFechaVencimientoProducto();
-        return ProductoCompraDTO.builder().codigo(producto.getCodigo())
-                .nombre(producto.getNombre()).categoria(producto.getCategoria().getNombre())
-                .descripcion(producto.getDescripcion()).cantidad(productoCompra.getCantidadProducto())
+        return ProductoCompraDTO.builder().codigo(producto1.getCodigo())
+                .nombre(producto1.getNombre()).categoria(categoriaProducto.getNombre())
+                .descripcion(producto1.getDescripcion()).cantidad(productoCompra.getCantidadProducto())
                 .precio(productoCompra.getPrecioProducto()).anioVencimiento(fechaVencimiento != null?
                         fechaVencimiento.getYear() : -1)
                 .mesVencimiento(fechaVencimiento != null? fechaVencimiento.getMonthValue() : -1)
@@ -98,8 +114,11 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public ProductoVentaDTO toProductoVentaDTO(Producto producto, ProductoVenta productoVenta) {
-        return ProductoVentaDTO.builder().codigo(producto.getCodigo()).nombre(producto.getNombre())
-                .categoria(producto.getCategoria().getNombre()).descripcion(producto.getDescripcion())
+        Producto producto1 = productoRepository.findById(producto.getCodigo()).orElse(new Producto());
+        CategoriaProducto categoriaProducto = categoriaProductoRepository.findById(producto1.getCategoria()
+                .getId()).orElse(new CategoriaProducto());
+        return ProductoVentaDTO.builder().codigo(producto1.getCodigo()).nombre(producto1.getNombre())
+                .categoria(categoriaProducto.getNombre()).descripcion(producto1.getDescripcion())
                 .cantidad(productoVenta.getCantidadProducto()).precio(productoVenta.getPrecioProducto())
                 .build();
     }

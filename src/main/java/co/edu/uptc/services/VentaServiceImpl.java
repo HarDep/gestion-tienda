@@ -81,6 +81,7 @@ public class VentaServiceImpl implements VentaService{
     }
 
     private ProductoVentaDTO saveProductoVenta(ProductoVentaDTO prod, int ventaId) {
+        prod.setPrecio(prod.getPrecio() * 0.15);
         ProductoVenta productoVenta = mapperService.toProductoVenta(prod,ventaId);
         ProductoVenta guardado = productoVentaRepository.save(productoVenta);
         Producto producto = guardado.getPrimaryKey().getProducto();

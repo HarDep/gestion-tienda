@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class ProductoProveedorPK {
 
-    @ManyToOne
-    @JoinColumn(name = "codigo_producto",referencedColumnName = "codigo_producto")
+    @ManyToOne @JoinColumn(name = "codigo_producto",referencedColumnName = "codigo_producto")
     private Producto producto;
 
     @ManyToOne @JoinColumn(name = "id_proveedor",referencedColumnName = "id_sujeto")

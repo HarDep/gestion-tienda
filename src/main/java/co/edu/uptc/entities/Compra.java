@@ -14,10 +14,10 @@ public class Compra {
     @Column(name = "id_compra")
     private int id;
 
-    @ManyToOne @JoinColumn(name = "id_lote")
+    @ManyToOne @JoinColumn(name = "id_lote", referencedColumnName = "id_lote")
     private Lote lote;
 
-    @ManyToOne @JoinColumn(name = "id_proveedor")
+    @ManyToOne @JoinColumn(name = "id_proveedor", referencedColumnName = "id_sujeto")
     private Sujeto proveedor;
 
     @Column(name = "fecha_hora_compra")

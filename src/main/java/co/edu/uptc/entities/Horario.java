@@ -1,6 +1,5 @@
 package co.edu.uptc.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +18,6 @@ public class Horario {
     @Enumerated(EnumType.STRING) @Column(name = "dia_semana_horario")
     private DiaSemana diaSemana;
 
-    @JsonFormat(pattern = "HH24:MI:SS")
     @Column(name = "hora_inicio_horario")
     private LocalTime horaInicio;
 

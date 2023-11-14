@@ -12,7 +12,7 @@ public class Producto {
     @Id @Column(name = "codigo_producto")
     private String codigo;
 
-    @ManyToOne @JoinColumn(name = "id_categoria_producto")
+    @ManyToOne @JoinColumn(name = "id_categoria_producto", referencedColumnName = "id_categoria_producto")
     private CategoriaProducto categoria;
 
     @Column(name = "nombre_producto")
