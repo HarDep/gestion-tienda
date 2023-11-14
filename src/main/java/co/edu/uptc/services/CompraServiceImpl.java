@@ -6,6 +6,7 @@ import co.edu.uptc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +47,11 @@ public class CompraServiceImpl implements CompraService {
         }
         //¿descalificamos la compra de una o solo quitamos los que no existen?
         if (compra.getProductos().stream().anyMatch(prod -> !productoRepository.existsById(prod.getCodigo()))){
+            return Optional.empty();
+        }
+        LocalDate now = LocalDate.now();
+        if (compra.getProductos().stream().anyMatch(prod -> now.isBefore(LocalDate.of(prod.getAnioVencimiento(),
+                prod.getMesVencimiento(),prod.getDiaVencimiento())))){
             return Optional.empty();
         }
         Compra compra1 = mapperService.toCompra(idLote, idProveedor);

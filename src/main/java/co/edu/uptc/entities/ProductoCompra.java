@@ -20,6 +20,6 @@ public class ProductoCompra {
     @Column(name = "cantidad_producto_compra")
     private int cantidadProducto;
 
-    @Column(name = "fecha_vencimiento_producto_compra", nullable = false)
+    @Column(name = "fecha_vencimiento_producto_compra")
     private LocalDate fechaVencimientoProducto;
 }
