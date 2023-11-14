@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 public class EmpleadoRolPK {
 
     @ManyToOne
-    @JoinColumn(name = "id_empleado",referencedColumnName = "id_sujeto",nullable = false)
+    @JoinColumn(name = "id_empleado",referencedColumnName = "id_sujeto")
     private Sujeto empleado;
 
-    @ManyToOne @JoinColumn(name = "id_rol_empleado",referencedColumnName = "id_rol_empleado",nullable = false)
+    @ManyToOne @JoinColumn(name = "id_rol_empleado",referencedColumnName = "id_rol_empleado")
     private RolEmpleado rol;
 }

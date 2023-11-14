@@ -12,6 +12,6 @@ public class EmpleadoHorario {
     @EmbeddedId
     private EmpleadoHorarioPK primaryKey;
 
-    @Column(name = "es_activo_empleado_horario", nullable = false)
+    @Column(name = "es_activo_empleado_horario")
     private Boolean esActivo;
 }

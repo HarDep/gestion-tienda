@@ -12,6 +12,6 @@ public class ProductoProveedor {
     @EmbeddedId
     private ProductoProveedorPK primaryKey;
 
-    @Column(name = "precio_producto_proveedor", nullable = false)
+    @Column(name = "precio_producto_proveedor")
     private double precioProducto;
 }

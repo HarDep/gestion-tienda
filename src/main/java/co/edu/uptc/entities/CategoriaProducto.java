@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Entity @Table(name = "categorias_producto")
 public class CategoriaProducto {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_categoria_producto",nullable = false)
+    @Column(name = "id_categoria_producto")
     private int id;
 
-    @Column(name = "nombre_categoria_producto", nullable = false, length = 50)
+    @Column(name = "nombre_categoria_producto")
     private String nombre;
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity @Table(name = "ventas")
 public class Venta {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_venta",nullable = false)
+    @Column(name = "id_venta")
     private int id;
 
     @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id_sujeto")
@@ -24,11 +24,9 @@ public class Venta {
     @ManyToOne @JoinColumn(name = "id_empleado", referencedColumnName = "id_sujeto")
     private Sujeto empleado;
 
-    @JsonFormat(pattern = "YYYY-MM-DD HH24:MI:SS")
-    @Column(name = "fecha_hora_venta", nullable = false)
+    @Column(name = "fecha_hora_venta")
     private LocalDateTime fechaVenta;
 
-    @JsonFormat(pattern = "YYYY-MM-DD HH24:MI:SS")
     @Column(name = "fecha_hora_entrega_venta")
     private LocalDateTime fechaEntrega;
 

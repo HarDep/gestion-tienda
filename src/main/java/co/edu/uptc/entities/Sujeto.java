@@ -10,32 +10,30 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
-@Entity @Table(name = "sujetos", uniqueConstraints = {@UniqueConstraint(columnNames = "telefono_sujeto"),
-        @UniqueConstraint(columnNames = "nit_empresa"), @UniqueConstraint(columnNames = "numero_documento_persona")})
+@Entity @Table(name = "sujetos")
 public class Sujeto {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_sujeto",nullable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_sujeto")
     private int id;
 
     @ManyToOne @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
     private Municipio municipio;
 
-    @Column(name = "nombre_sujeto", nullable = false, length = 50)
+    @Column(name = "nombre_sujeto")
     private String nombre;
 
-    @Column(name = "apellido_persona", length = 50)
+    @Column(name = "apellido_persona")
     private String apellido;
 
-    @Column(name = "telefono_sujeto", nullable = false, length = 20)
+    @Column(name = "telefono_sujeto")
     private String telefono;
 
-    @Enumerated(EnumType.STRING) @Column(name = "tipo_sujeto", nullable = false, length = 3)
+    @Enumerated(EnumType.STRING) @Column(name = "tipo_sujeto")
     private TipoSujeto tipoSujeto;
 
-    @Column(name = "direccion_sujeto", length = 50)
+    @Column(name = "direccion_sujeto")
     private String direccion;
 
-    @Column(name = "numero_documento_persona", length = 50)
+    @Column(name = "numero_documento_persona")
     private String numeroDocumento;
 
     @Column(name = "nit_empresa")

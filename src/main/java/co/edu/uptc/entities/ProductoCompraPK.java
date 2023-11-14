@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 public class ProductoCompraPK {
 
     @ManyToOne
-    @JoinColumn(name = "codigo_producto",referencedColumnName = "codigo_producto",nullable = false)
+    @JoinColumn(name = "codigo_producto",referencedColumnName = "codigo_producto")
     private Producto producto;
 
-    @ManyToOne @JoinColumn(name = "id_compra",referencedColumnName = "id_compra",nullable = false)
+    @ManyToOne @JoinColumn(name = "id_compra",referencedColumnName = "id_compra")
     private Compra compra;
 }

@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Entity @Table(name = "municipios")
 public class Municipio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_municipio",nullable = false)
+    @Column(name = "id_municipio")
     private int id;
 
-    @Column(name = "nombre_municipio", nullable = false, length = 50)
+    @Column(name = "nombre_municipio")
     private String nombre;
 }

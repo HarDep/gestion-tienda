@@ -12,6 +12,6 @@ public class EmpleadoRol {
     @EmbeddedId
     private EmpleadoRolPK primaryKey;
 
-    @Column(name = "es_activo_empleado_rol", nullable = false)
+    @Column(name = "es_activo_empleado_rol")
     private Boolean esActivo;
 }

@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 public class EmpleadoHorarioPK {
 
     @ManyToOne
-    @JoinColumn(name = "id_empleado",referencedColumnName = "id_sujeto",nullable = false)
+    @JoinColumn(name = "id_empleado",referencedColumnName = "id_sujeto")
     private Sujeto empleado;
 
-    @ManyToOne @JoinColumn(name = "id_horario",referencedColumnName = "id_horario",nullable = false)
+    @ManyToOne @JoinColumn(name = "id_horario",referencedColumnName = "id_horario")
     private Horario horario;
 }

@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class ProductoVentaPK {
 
-    @ManyToOne @JoinColumn(name = "codigo_producto", referencedColumnName = "codigo_producto", nullable = false)
+    @ManyToOne @JoinColumn(name = "codigo_producto", referencedColumnName = "codigo_producto")
     private Producto producto;
 
-    @ManyToOne @JoinColumn(name = "id_venta", referencedColumnName = "id_venta",nullable = false)
+    @ManyToOne @JoinColumn(name = "id_venta", referencedColumnName = "id_venta")
     private Venta venta;
 }

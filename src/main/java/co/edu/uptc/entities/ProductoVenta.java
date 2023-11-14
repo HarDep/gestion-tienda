@@ -12,9 +12,9 @@ public class ProductoVenta {
     @EmbeddedId
     private ProductoVentaPK primaryKey;
 
-    @Column(name = "precio_producto_venta", nullable = false)
+    @Column(name = "precio_producto_venta")
     private double precioProducto;
 
-    @Column(name = "cantidad_producto_venta", nullable = false)
+    @Column(name = "cantidad_producto_venta")
     private int cantidadProducto;
 }

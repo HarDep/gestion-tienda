@@ -1,6 +1,5 @@
 package co.edu.uptc.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,10 +12,9 @@ import java.time.LocalDate;
 @Entity @Table(name = "lotes")
 public class Lote {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_lote",nullable = false)
+    @Column(name = "id_lote")
     private int id;
 
-    @JsonFormat(pattern = "YYYY-MM-DD")
-    @Column(name = "fecha_lote", nullable = false)
+    @Column(name = "fecha_lote")
     private LocalDate fechaLote;
 }
