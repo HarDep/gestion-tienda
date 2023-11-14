@@ -14,5 +14,5 @@ public class RolEmpleado {
     private int id;
 
     @Column(name = "nombre_rol_empleado")
-    private int nombre;
+    private String nombre;
 }
