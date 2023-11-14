@@ -1,14 +1,14 @@
-CREATE DATABASE proyecto_bases;
+--CREATE DATABASE proyecto_bases;
 
 USE proyecto_bases;
 
 CREATE TABLE municipios (
-    id_municipio INT NOT NULL,
+    id_municipio INT NOT NULL IDENTITY(1,1),
     nombre_municipio NVARCHAR(50)
 );
 
 CREATE TABLE roles_empleado (
-    id_rol_empleado INT NOT NULL,
+    id_rol_empleado INT NOT NULL IDENTITY(1,1),
     nombre_rol_empleado NVARCHAR(50)
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE empleados_roles (
 );
 
 CREATE TABLE sujetos (
-    id_sujeto INT NOT NULL,
+    id_sujeto INT NOT NULL IDENTITY(1,1),
     nombre_sujeto NVARCHAR(50) NOT NULL,
     telefono_sujeto NVARCHAR(20) NOT NULL,
     tipo_sujeto NCHAR(3) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE sujetos (
 );
 
 CREATE TABLE horarios (
-    id_horario INT NOT NULL,
+    id_horario INT NOT NULL IDENTITY(1,1),
     dia_semana_horario NCHAR(3) NOT NULL,
     hora_inicio_horario TIME NOT NULL,
     numero_horas_horario SMALLINT NOT NULL
@@ -44,7 +44,7 @@ CREATE TABLE empleados_horarios (
 );
 
 CREATE TABLE categorias_producto (
-    id_categoria_producto INT NOT NULL,
+    id_categoria_producto INT NOT NULL IDENTITY(1,1),
     nombre_categoria_producto NVARCHAR(50) NOT NULL
 );
 
@@ -56,19 +56,19 @@ CREATE TABLE productos (
 );
 
 CREATE TABLE lotes (
-    id_lote INT NOT NULL,
+    id_lote INT NOT NULL IDENTITY(1,1),
     fecha_lote DATE NOT NULL
 );
 
 CREATE TABLE compras (
-    id_compra INT NOT NULL,
+    id_compra INT NOT NULL IDENTITY(1,1),
     id_proveedor INT NOT NULL,
     id_lote INT NOT NULL,
     fecha_hora_compra DATETIME2 NOT NULL
 );
 
 CREATE TABLE ventas (
-    id_venta INT NOT NULL,
+    id_venta INT NOT NULL IDENTITY(1,1),
     id_empleado INT NOT NULL,
     id_cliente INT NOT NULL,
     fecha_hora_venta DATETIME2 NOT NULL,

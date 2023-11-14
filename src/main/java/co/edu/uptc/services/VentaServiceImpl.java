@@ -77,7 +77,7 @@ public class VentaServiceImpl implements VentaService{
         return productos.stream().map(prod -> {
             Producto producto = prod.getPrimaryKey().getProducto();
             //porcentaje adicional en el precio de venta
-            prod.setPrecioProducto(prod.getPrecioProducto() * 0.15);
+            prod.setPrecioProducto(prod.getPrecioProducto() + prod.getPrecioProducto() * 0.15);
             return mapperService.toProductoVentaDTO(producto,prod);
         }).toList();
     }

@@ -45,13 +45,13 @@ ALTER TABLE compras ADD
     CONSTRAINT pk_compras PRIMARY KEY (id_compra),
     CONSTRAINT fk_compras_prov FOREIGN KEY (id_proveedor) REFERENCES sujetos (id_sujeto),
     CONSTRAINT fk_compras_lote FOREIGN KEY (id_lote) REFERENCES lotes (id_lote),
-    CONSTRAINT chk_compras_fec CHECK (fecha_hora_compra <= SYSDATETIME());
+    CONSTRAINT chk_compras_fec CHECK (fecha_hora_compra <= dateadd(SECOND,1,SYSDATETIME()));
 
 ALTER TABLE ventas ADD
     CONSTRAINT pk_ventas PRIMARY KEY (id_venta),
     CONSTRAINT fk_ventas_emp FOREIGN KEY (id_empleado) REFERENCES sujetos (id_sujeto),
     CONSTRAINT fk_ventas_clie FOREIGN KEY (id_cliente) REFERENCES sujetos (id_sujeto),
-    CONSTRAINT chk_ventas_fec CHECK (fecha_hora_venta <= SYSDATETIME()),
+    CONSTRAINT chk_ventas_fec CHECK (fecha_hora_venta <= dateadd(SECOND,1,SYSDATETIME())),
     CONSTRAINT chk_ventas_entg CHECK (fecha_hora_entrega_venta > fecha_hora_venta),
     CONSTRAINT chk_ventas_entgpr CHECK (precio_entrega_venta > 0);
 
@@ -101,7 +101,7 @@ END
 CREATE TRIGGER ventas_validator ON ventas FOR INSERT AS
 BEGIN
     DECLARE @id_empleado AS INT = (SELECT id_empleado FROM INSERTED)
-    IF EXISTS (SELECT * FROM sujetos WHERE id_sujeto = @id_empleado AND tipo_sujeto NOT LIKE 'PER')
+    IF EXISTS (SELECT * FROM sujetos WHERE id_sujeto = @id_empleado AND tipo_sujeto LIKE 'EMP')
     BEGIN
         RAISERROR ('Venta no valida por empleado no valido', 16, 1)
         ROLLBACK TRANSACTION

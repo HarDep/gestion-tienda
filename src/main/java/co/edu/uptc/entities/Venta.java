@@ -1,6 +1,5 @@
 package co.edu.uptc.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +30,7 @@ public class Venta {
     private LocalDateTime fechaEntrega;
 
     @Column(name = "precio_entrega_venta")
-    private double precioEntrega;
+    private Double precioEntrega;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "productos_ventas", joinColumns = @JoinColumn(name = "id_venta", referencedColumnName = "id_venta"),
