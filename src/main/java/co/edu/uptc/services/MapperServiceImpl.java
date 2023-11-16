@@ -76,6 +76,23 @@ public class MapperServiceImpl implements MapperService{
     }
 
     @Override
+    public Sujeto toSujeto(SujetoDTO sujeto, int idMunicipio) {
+        Sujeto sujeto1 = Sujeto.builder().nombre(sujeto.getNombre()).telefono(sujeto.getTelefono())
+                .tipoSujeto(sujeto.getTipoSujeto()).municipio(Municipio.builder().id(idMunicipio).build())
+                .direccion(sujeto.getDireccion()).build();
+        switch (sujeto.getTipoSujeto()){
+            case PER -> {
+                sujeto1.setApellido(sujeto.getApellido());
+                sujeto1.setNumeroDocumento(sujeto.getNumeroDoc());
+            }
+            case EMP -> {
+                sujeto1.setNit(sujeto.getNit());
+            }
+        }
+        return sujeto1;
+    }
+
+    @Override
     public ProductoCompra toProductoCompra(ProductoCompraDTO prod, int compraId) {
         LocalDate fechaVencimiento = LocalDate.of(prod.getAnioVencimiento(),prod.getMesVencimiento(),
                 prod.getDiaVencimiento());
@@ -125,5 +142,10 @@ public class MapperServiceImpl implements MapperService{
 
     public LoteDTO toLoteDTO(Lote lote){
         return LoteDTO.builder().id(lote.getId()).fecha(lote.getFechaLote()).build();
+    }
+
+    @Override
+    public MunicipioDTO toMunicipioDTO(Municipio municipio) {
+        return MunicipioDTO.builder().id(municipio.getId()).nombre(municipio.getNombre()).build();
     }
 }

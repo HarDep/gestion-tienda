@@ -12,9 +12,11 @@ public interface MapperService {
     CompraDTO toCompraDTO(Compra compra, List<ProductoCompraDTO> productos);
     VentaDTO toVentaDTO(Venta venta, List<ProductoVentaDTO> productos);
     SujetoDTO toSujetoDTO(Sujeto sujeto);
+    Sujeto toSujeto(SujetoDTO sujeto, int idMunicipio);
     ProductoCompra toProductoCompra(ProductoCompraDTO prod, int compraId);
     ProductoVenta toProductoVenta(ProductoVentaDTO prod, int ventaId);
     ProductoCompraDTO toProductoCompraDTO(Producto producto, ProductoCompra productoCompra);
     ProductoVentaDTO toProductoVentaDTO(Producto producto, ProductoVenta productoVenta);
     LoteDTO toLoteDTO(Lote lote);
+    MunicipioDTO toMunicipioDTO(Municipio municipio);
 }

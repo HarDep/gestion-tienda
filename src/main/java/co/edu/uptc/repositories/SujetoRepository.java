@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SujetoRepository extends JpaRepository<Sujeto, Integer> {
@@ -24,4 +25,16 @@ public interface SujetoRepository extends JpaRepository<Sujeto, Integer> {
     //query para obtener proveedores
     @Query(value = "SELECT * FROM sujetos WHERE id_sujeto IN (SELECT id_proveedor FROM productos_proveedores)", nativeQuery = true)
     List<Sujeto> findSuppliers();
+
+    Optional<Sujeto> findByNumero_documento_persona(String numero_documento_persona);
+
+    boolean existsByNumero_documento_persona(String numero_documento_persona);
+
+    Optional<Sujeto> findByNit_empresa(String nit_empresa);
+
+    boolean existsByNit_empresa(String nit_empresa);
+
+    Optional<Sujeto> findByTelefono_sujeto(String telefono_sujeto);
+
+    boolean existsByTelefono_sujeto(String telefono_sujeto);
 }
