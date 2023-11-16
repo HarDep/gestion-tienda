@@ -2,11 +2,10 @@ package co.edu.uptc.controllers;
 
 import co.edu.uptc.dtos.SujetoDTO;
 import co.edu.uptc.services.SujetoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +28,10 @@ public class SujetoController {
     @GetMapping("/proveedores")
     public ResponseEntity<List<SujetoDTO>> getSuppliers(){
         return ResponseEntity.ok(sujetoService.getSuppliers());
+    }
+
+    @PostMapping
+    private ResponseEntity<SujetoDTO> saveSujeto(@Valid @RequestBody SujetoDTO sujeto){
+        return null;
     }
 }

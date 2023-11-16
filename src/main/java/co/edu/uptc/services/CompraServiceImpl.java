@@ -2,12 +2,13 @@ package co.edu.uptc.services;
 
 import co.edu.uptc.dtos.*;
 import co.edu.uptc.entities.*;
+import co.edu.uptc.exceptions.InvalidResource;
+import co.edu.uptc.exceptions.ResourceNotFound;
 import co.edu.uptc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,22 +39,24 @@ public class CompraServiceImpl implements CompraService {
      */
     @Override
     public Optional<CompraDTO> save(CompraDTO compra, int idLote, int idProveedor) {
-        if (!loteRepository.existsById(idLote)) {
-            return Optional.empty();
-        }
+        loteRepository.findById(idLote)
+                .orElseThrow(() -> new ResourceNotFound("Lote","id",idLote + ""));
         List<Sujeto> proveedores = sujetoRepository.findSuppliers();
         if (proveedores.stream().allMatch(sujeto -> sujeto.getId() != idProveedor)){
-            return Optional.empty();
+            throw new ResourceNotFound("Proveedor", "id", "" + idProveedor);
         }
         //¿descalificamos la compra de una o solo quitamos los que no existen?
-        if (compra.getProductos().stream().anyMatch(prod -> !productoRepository.existsById(prod.getCodigo()))){
-            return Optional.empty();
-        }
+        compra.getProductos().forEach(prod -> {
+            if(!productoRepository.existsById(prod.getCodigo()))
+                throw new ResourceNotFound("Producto", "id", prod.getCodigo());
+        });
         LocalDate now = LocalDate.now();
-        if (compra.getProductos().stream().anyMatch(prod -> now.isBefore(LocalDate.of(prod.getAnioVencimiento(),
-                prod.getMesVencimiento(),prod.getDiaVencimiento())))){
-            return Optional.empty();
-        }
+        compra.getProductos().forEach(prod ->{
+            if(now.isBefore(LocalDate.of(prod.getAnioVencimiento(), prod.getMesVencimiento(),
+                    prod.getDiaVencimiento())))
+                throw new InvalidResource("Producto", "la fecha de vencimiento ya esta cumplida",
+                        prod.getNombre());
+        });
         Compra compra1 = mapperService.toCompra(idLote, idProveedor);
         Compra guardado = compraRepository.save(compra1);
         List<ProductoCompraDTO> productos = compra.getProductos().stream()
@@ -70,7 +73,7 @@ public class CompraServiceImpl implements CompraService {
     public List<ProductoProveedorDTO> getSupplierProducts(int idProveedor) {
         List<Sujeto> proveedores = sujetoRepository.findSuppliers();
         if (proveedores.stream().allMatch(sujeto -> sujeto.getId() != idProveedor)){
-            return new ArrayList<>();
+            throw new ResourceNotFound("Proveedor", "id", "" + idProveedor);
         }
         List<ProductoProveedor> productos = productoProveedorRepository.getSupplierProducts(idProveedor);
         return productos.stream().map(prod -> mapperService.toProductoProveedorDTO(prod)).toList();

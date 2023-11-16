@@ -6,6 +6,8 @@ import co.edu.uptc.dtos.VentaDTO;
 import co.edu.uptc.entities.Producto;
 import co.edu.uptc.entities.ProductoVenta;
 import co.edu.uptc.entities.Venta;
+import co.edu.uptc.exceptions.InvalidResource;
+import co.edu.uptc.exceptions.ResourceNotFound;
 import co.edu.uptc.repositories.ProductoRepository;
 import co.edu.uptc.repositories.ProductoVentaRepository;
 import co.edu.uptc.repositories.SujetoRepository;
@@ -42,24 +44,33 @@ public class VentaServiceImpl implements VentaService{
      */
     @Override
     public Optional<VentaDTO> save(VentaDTO venta, int idCliente, int idEmpleado) {
-        if (!sujetoRepository.existsById(idCliente)){
-            return Optional.empty();
-        }
+        sujetoRepository.findById(idCliente).orElseThrow(
+                () -> new ResourceNotFound("Cliente","id",idCliente + ""));
         List<SujetoDTO> empleados = sujetoService.getSellers();
         if (empleados.stream().allMatch(sujeto -> sujeto.getIdSujeto() != idEmpleado)){
-            return Optional.empty();
+            throw new ResourceNotFound("Empleado", "id", "" + idEmpleado);
         }
         //¿descalificamos la venta de una o solo quitamos los que no existen?
-        if (venta.getProductos().stream().anyMatch(prod -> !productoRepository.existsById(prod.getCodigo()))){
-            return Optional.empty();
-        }
-        //verificar cantidad de productos con el stock
-        List<ProductoVenta> stock = productoVentaRepository.getStock();
-        if(venta.getProductos().stream().anyMatch(prod -> stock.stream().anyMatch(stProd ->
-                stProd.getPrimaryKey().getProducto().getCodigo().equals(prod.getCodigo()) &&
-                        prod.getCantidad() > stProd.getCantidadProducto()))){
-            return Optional.empty();
-        }
+        venta.getProductos().forEach(prod -> {
+            if(!productoRepository.existsById(prod.getCodigo()))
+                throw new ResourceNotFound("Producto", "id", prod.getCodigo());
+        });
+        //verificar cantidad y precio de productos con el stock
+        List<ProductoVentaDTO> stock = getStock();
+        venta.getProductos().forEach(prod ->{
+            stock.forEach(stProd ->{
+                if(stProd.getCodigo().equals(prod.getCodigo())){
+                    if (prod.getCantidad() > stProd.getCantidad())
+                        throw new InvalidResource("Producto",
+                                "la cantidad del producto es mayor al disponible en stock",
+                                prod.getNombre());
+                    if (prod.getPrecio() != stProd.getPrecio())
+                        throw new InvalidResource("Producto",
+                                "el precio del producto no es el mismo que el registrado en stock",
+                                prod.getNombre());
+                }
+            });
+        });
         Venta venta1 = mapperService.toVenta(idCliente, idEmpleado);
         Venta guardado = ventaRepository.save(venta1);
         List<ProductoVentaDTO> productos = venta.getProductos().stream()
