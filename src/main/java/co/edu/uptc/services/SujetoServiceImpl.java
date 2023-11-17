@@ -29,23 +29,23 @@ public class SujetoServiceImpl implements SujetoService {
     @Override
     public Optional<SujetoDTO> save(SujetoDTO sujeto, int idMunicipio) {
         validations(sujeto,idMunicipio);
-        if(repository.existsByTelefono_sujeto(sujeto.getTelefono()))
-            throw new InvalidResource(sujeto.getTipoSujeto().getValue(),"el telefono ya existe",
-                    sujeto.getTelefono());
+        if(repository.existsByTelefono(sujeto.getTelefono()))
+            throw new InvalidResource("Telefono de "+sujeto.getTipoSujeto().getValue(),
+                    "el telefono ya existe", sujeto.getTelefono());
         switch (sujeto.getTipoSujeto()){
             case PER -> {
                 if (sujeto.getApellido() == null)
-                    throw new InvalidResource("Persona","el apellido no es valido", null);
+                    throw new InvalidResource("Apellido de Persona","el apellido no es valido", null);
                 if (sujeto.getNumeroDoc() == null)
-                    throw new InvalidResource("Persona","el numero de documento no es valido", null);
-                if(repository.existsByNumero_documento_persona(sujeto.getNumeroDoc()))
-                    throw new InvalidResource("Persona","el numero de documento ya existe", sujeto.getNumeroDoc());
+                    throw new InvalidResource("Numero de documento de Persona","el numero de documento no es valido", null);
+                if(repository.existsByNumeroDocumento(sujeto.getNumeroDoc()))
+                    throw new InvalidResource("Numero de documento de Persona","el numero de documento ya existe", sujeto.getNumeroDoc());
             }
             case EMP -> {
                 if (sujeto.getNit() == null)
-                    throw new InvalidResource("Empresa","el NIT no es valido", null);
-                if(repository.existsByNit_empresa(sujeto.getNit()))
-                    throw new InvalidResource("Empresa","el NIT ya existe", sujeto.getNumeroDoc());
+                    throw new InvalidResource("NIT de Empresa","el NIT no es valido", null);
+                if(repository.existsByNit(sujeto.getNit()))
+                    throw new InvalidResource("NIT de Empresa","el NIT ya existe", sujeto.getNit());
             }
         }
         Sujeto sujeto1 = mapperService.toSujeto(sujeto, idMunicipio);
@@ -57,32 +57,32 @@ public class SujetoServiceImpl implements SujetoService {
     public Optional<SujetoDTO> update(SujetoDTO sujeto, int idSujeto, int idMunicipio) {
         validateExists(idSujeto);
         validations(sujeto,idMunicipio);
-        repository.findByTelefono_sujeto(sujeto.getTelefono()).map(suj ->{
-            if (sujeto.getIdSujeto() != idSujeto)
-                throw new InvalidResource(sujeto.getTipoSujeto().getValue(),"el telefono ya existe",
-                        sujeto.getTelefono());
+        repository.findByTelefono(sujeto.getTelefono()).map(suj ->{
+            if (suj.getId() != idSujeto)
+                throw new InvalidResource("Telefono de "+sujeto.getTipoSujeto().getValue(),
+                        "el telefono ya existe", sujeto.getTelefono());
             return null;
         });
         switch (sujeto.getTipoSujeto()){
             case PER -> {
                 if (sujeto.getApellido() == null)
-                    throw new InvalidResource("Persona","el apellido no es valido", null);
+                    throw new InvalidResource("Apellido de Persona","el apellido no es valido", null);
                 if (sujeto.getNumeroDoc() == null)
-                    throw new InvalidResource("Persona","el numero de documento no es valido", null);
-                repository.findByNumero_documento_persona(sujeto.getNumeroDoc()).map(suj -> {
-                    if (sujeto.getIdSujeto() != idSujeto)
-                        throw new InvalidResource("Persona","el numero de documento ya existe",
+                    throw new InvalidResource("Numero de documento de Persona","el numero de documento no es valido", null);
+                repository.findByNumeroDocumento(sujeto.getNumeroDoc()).map(suj -> {
+                    if (suj.getId() != idSujeto)
+                        throw new InvalidResource("Numero de documento de Persona","el numero de documento ya existe",
                                 sujeto.getNumeroDoc());
                     return null;
                 });
             }
             case EMP -> {
                 if (sujeto.getNit() == null)
-                    throw new InvalidResource("Empresa","el NIT no es valido", null);
-                repository.findByNit_empresa(sujeto.getNit()).map(suj -> {
-                    if (sujeto.getIdSujeto() != idSujeto)
-                        throw new InvalidResource("Empresa","el NIT ya existe",
-                                sujeto.getNumeroDoc());
+                    throw new InvalidResource("NIT de Empresa","el NIT no es valido", null);
+                repository.findByNit(sujeto.getNit()).map(suj -> {
+                    if (suj.getId() != idSujeto)
+                        throw new InvalidResource("NIT de Empresa","el NIT ya existe",
+                                sujeto.getNit());
                     return null;
                 });
             }
@@ -142,7 +142,8 @@ public class SujetoServiceImpl implements SujetoService {
         municipioRepository.findById(idMunicipio).orElseThrow(
                 () -> new ResourceNotFound("Municipio","id",idMunicipio + ""));
         if (sujeto.getDireccion() == null)
-            throw new InvalidResource(sujeto.getTipoSujeto().getValue(),"la direccion no es valida", null);
+            throw new InvalidResource("Direccion de "+sujeto.getTipoSujeto().getValue(),
+                    "la direccion no es valida", null);
     }
 
     private void validateExists(int id){

@@ -46,16 +46,24 @@ public class CompraServiceImpl implements CompraService {
             throw new ResourceNotFound("Proveedor", "id", "" + idProveedor);
         }
         //¿descalificamos la compra de una o solo quitamos los que no existen?
-        compra.getProductos().forEach(prod -> {
-            if(!productoRepository.existsById(prod.getCodigo()))
-                throw new ResourceNotFound("Producto", "id", prod.getCodigo());
-        });
+        List<ProductoProveedorDTO> productosProv = productoProveedorRepository.getSupplierProducts(idProveedor)
+                .stream().map(prod -> mapperService.toProductoProveedorDTO(prod)).toList();
         LocalDate now = LocalDate.now();
         compra.getProductos().forEach(prod ->{
+            if(!productoRepository.existsById(prod.getCodigo()))
+                throw new ResourceNotFound("Producto", "id", prod.getCodigo());
             if(now.isBefore(LocalDate.of(prod.getAnioVencimiento(), prod.getMesVencimiento(),
                     prod.getDiaVencimiento())))
                 throw new InvalidResource("Producto", "la fecha de vencimiento ya esta cumplida",
                         prod.getNombre());
+            productosProv.forEach(prodProv ->{
+                if(prodProv.getCodigoProducto().equals(prod.getCodigo())){
+                    if (prod.getPrecio() != prodProv.getPrecio())
+                        throw new InvalidResource("Producto",
+                                "el precio del producto no es el mismo que el registrado en stock",
+                                prod.getNombre());
+                }
+            });
         });
         Compra compra1 = mapperService.toCompra(idLote, idProveedor);
         Compra guardado = compraRepository.save(compra1);

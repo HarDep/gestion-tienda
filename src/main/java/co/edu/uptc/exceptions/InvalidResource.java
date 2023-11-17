@@ -16,7 +16,7 @@ public class InvalidResource extends RuntimeException{
     private String valueField;
 
     public InvalidResource(String resourceName, String reason, String valueField) {
-        super(String.format("%s %s no valido ya que %s",
+        super(String.format("%s con el valor %s no aceptado ya que %s",
                 resourceName, valueField, reason));
         this.resourceName = resourceName;
         this.reason = reason;

@@ -26,15 +26,15 @@ public interface SujetoRepository extends JpaRepository<Sujeto, Integer> {
     @Query(value = "SELECT * FROM sujetos WHERE id_sujeto IN (SELECT id_proveedor FROM productos_proveedores)", nativeQuery = true)
     List<Sujeto> findSuppliers();
 
-    Optional<Sujeto> findByNumero_documento_persona(String numero_documento_persona);
+    Optional<Sujeto> findByNumeroDocumento(String numero_documento_persona);
 
-    boolean existsByNumero_documento_persona(String numero_documento_persona);
+    boolean existsByNumeroDocumento(String numero_documento_persona);
 
-    Optional<Sujeto> findByNit_empresa(String nit_empresa);
+    Optional<Sujeto> findByNit(String nit_empresa);
 
-    boolean existsByNit_empresa(String nit_empresa);
+    boolean existsByNit(String nit_empresa);
 
-    Optional<Sujeto> findByTelefono_sujeto(String telefono_sujeto);
+    Optional<Sujeto> findByTelefono(String telefono_sujeto);
 
-    boolean existsByTelefono_sujeto(String telefono_sujeto);
+    boolean existsByTelefono(String telefono_sujeto);
 }

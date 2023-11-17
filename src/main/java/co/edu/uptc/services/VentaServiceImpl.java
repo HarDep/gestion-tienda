@@ -51,13 +51,11 @@ public class VentaServiceImpl implements VentaService{
             throw new ResourceNotFound("Empleado", "id", "" + idEmpleado);
         }
         //¿descalificamos la venta de una o solo quitamos los que no existen?
-        venta.getProductos().forEach(prod -> {
-            if(!productoRepository.existsById(prod.getCodigo()))
-                throw new ResourceNotFound("Producto", "id", prod.getCodigo());
-        });
-        //verificar cantidad y precio de productos con el stock
+        //Verificar cantidad y precio de productos con el stock
         List<ProductoVentaDTO> stock = getStock();
         venta.getProductos().forEach(prod ->{
+            if(!productoRepository.existsById(prod.getCodigo()))
+                throw new ResourceNotFound("Producto", "id", prod.getCodigo());
             stock.forEach(stProd ->{
                 if(stProd.getCodigo().equals(prod.getCodigo())){
                     if (prod.getCantidad() > stProd.getCantidad())
