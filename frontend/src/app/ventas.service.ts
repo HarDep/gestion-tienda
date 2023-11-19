@@ -20,7 +20,7 @@ export class VentasService {
     return this.httpClient.get<ProductoVenta[]>(`${this.url}/productos/stock`);
   }
 
-  saveVenta(venta: Venta, idCliente: number, idEmpleado: number, number: number): Observable<Venta> {
+  saveVenta(venta:Venta, idCliente:number, idEmpleado:number): Observable<Venta> {
     return this.httpClient.post<Venta>(`${this.url}?idCliente=${idCliente}&idEmpleado=${idEmpleado}`, venta);
   }
 }

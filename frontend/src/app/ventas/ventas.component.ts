@@ -67,7 +67,7 @@ export class VentasComponent {
   }
 
   guardarVenta() {
-    this.ventaService.saveVenta(this.venta, this.idLote, this.idEmpleado, this.idCliente).subscribe(data => {
+    this.ventaService.saveVenta(this.venta, this.idCliente, this.idEmpleado).subscribe(data => {
       console.log(data);
     });
     this.router.navigate(['productos'])
