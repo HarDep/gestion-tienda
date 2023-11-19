@@ -1,21 +1,54 @@
 <h2>Realizar una Venta</h2>
 
-<div class="justify-content-center">
-    <div class="d-flex flex-column">
-        <div class="row d-flex justify-content-center">
-            <div class="col col-md-10 col-sm-10 col-xs-12 cardcard overflow-hidden shadow rounded-4 border-0">
-                jjjf
-            </div>
-        </div>
-    </div>
+<div class="desplegableItem">
+  <select name="empleado" id="empleado" (change)="guardarIdEmpleado($event)">
+    <option value="" disabled selected>Selecciona un empleado</option>
+    <option *ngFor="let opcion of empleados" [value]="opcion.idSujeto">
+      {{opcion.nombre}}
+    </option>
+  </select>
 </div>
 
-<div class="justify-content-center">
-    <div class="d-flex flex-column">
-        <div class="row d-flex justify-content-center">
-            <div class="col col-md-12 col-sm-12 col-xs-12 cardcard overflow-hidden shadow rounded-4 border-0">
-                jsjjs
-            </div>
-        </div>
+<div class="desplegableItem">
+  <select name="cliente" id="cliente" (change)="guardarIdCliente($event)">
+    <option value="" disabled selected>Selecciona un cliente</option>
+    <option *ngFor="let opcion of clientes" [value]="opcion.idSujeto">
+      {{opcion.nombre}}
+    </option>
+  </select>
+</div>
+
+<div class="buyButton">
+  <button type="button" [disabled]="botonDeshabilitado" (click)="guardarVenta()">Vender</button>
+</div>
+
+<div class="row">
+  <div class="col-md-4" *ngFor="let stock of stock">
+    <div class="tarjetaProducto">
+      <h5>{{stock.nombre}}</h5>
+      <p>{{stock.descripcion}}</p>
     </div>
+  </div>
+</div>
+
+<div *ngIf="stock === undefined" class="productosLabel">
+  <h4>Productos</h4>
+</div>
+
+<div *ngIf="stock !== undefined">
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let item of stock" class="col-md-4">
+        <!-- Contenido de cada celda -->
+        <div class="tarjetaProducto" style="width: 100%;"
+             (click)="guardarProducto(item.toString())">
+          <div class="card-body">
+            <h5 class="card-title">{{item.nombre}}</h5>
+            <p class="card-description">{{item.descripcion}}</p>
+            <p class="card-codigo">{{item.codigo}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
