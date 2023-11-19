@@ -6,7 +6,7 @@ import { Sujeto } from '../sujeto';
 import { ProductoVenta } from '../producto-venta';
 import { Route, Router } from '@angular/router';
 import { Lote } from '../lote';
-import {ProductosProveedor} from "../productos-proveedor";
+import { ProductosProveedor } from "../productos-proveedor";
 
 @Component({
   selector: 'app-ventas',
@@ -22,8 +22,7 @@ export class VentasComponent {
   idLote: number;
   idEmpleado: number;
   idCliente: number;
-  stock:ProductoVenta[];
-
+  stock: ProductoVenta[];
   botonDeshabilitado = true;
   private productos: ProductoVenta[];
 
@@ -34,7 +33,7 @@ export class VentasComponent {
 
   ngOnInit(): void {
     this.ventaService.getProductosEnStock().subscribe(data => {
-      this.lotes = data;
+      this.stock = data; // Inicializa el stock en la carga inicial
     });
     this.sujetoService.getEmpleados().subscribe(data => {
       this.empleados = data;
@@ -48,7 +47,7 @@ export class VentasComponent {
     this.idCliente = idCli;
 
     this.ventaService.getProductosEnStock().subscribe((data => {
-      this.productos = data;
+      this.stock = data;
     }))
   }
 
@@ -58,16 +57,13 @@ export class VentasComponent {
     this.botonDeshabilitado = false;
   }
 
-  guardarIdLote(event: any) {
-    this.idLote = parseInt(event.target.value, 10);
-  }
-
   guardarIdEmpleado(event: any) {
     this.idEmpleado = parseInt(event.target.value, 10);
   }
 
   guardarIdCliente(event: any) {
     this.idCliente = parseInt(event.target.value, 10);
+    this.mostrarStock(this.idCliente);
   }
 
   guardarVenta() {

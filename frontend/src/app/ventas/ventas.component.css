@@ -97,10 +97,6 @@ option {
   font-size: 14px; /* Ajusta el tamaño de la fuente según sea necesario */
 }
 
-option:selected {
-  font-weight: bold; /* Ajusta el peso de la fuente según sea necesario */
-}
-
 select:focus {
   outline: none; /* Elimina el contorno predeterminado del enfoque */
   border-color: #66afe9; /* Cambia el color del borde al enfocar */
