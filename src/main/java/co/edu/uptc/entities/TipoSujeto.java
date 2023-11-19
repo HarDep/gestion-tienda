@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum TipoSujeto {
-    PER("Persona"),EMP("Empleado"),MEE("OWN");
+    PER("Persona"),EMP("Empresa"),MEE("OWNER");
 
     private final String value;
 

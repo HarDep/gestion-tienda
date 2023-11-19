@@ -26,6 +26,10 @@ public interface SujetoRepository extends JpaRepository<Sujeto, Integer> {
     @Query(value = "SELECT * FROM sujetos WHERE id_sujeto IN (SELECT id_proveedor FROM productos_proveedores)", nativeQuery = true)
     List<Sujeto> findSuppliers();
 
+    @Query(value = "SELECT * FROM sujetos WHERE id_sujeto IN (SELECT id_empleado FROM empleados_roles) " +
+            "AND id_sujeto IN (SELECT id_empleado from empleados_horarios)", nativeQuery = true)
+    List<Sujeto> findEmployees();
+
     Optional<Sujeto> findByNumeroDocumento(String numero_documento_persona);
 
     boolean existsByNumeroDocumento(String numero_documento_persona);

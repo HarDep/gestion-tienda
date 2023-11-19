@@ -84,9 +84,12 @@ public class MapperServiceImpl implements MapperService{
             case PER -> {
                 sujeto1.setApellido(sujeto.getApellido());
                 sujeto1.setNumeroDocumento(sujeto.getNumeroDoc());
+                sujeto1.setNit(null);
             }
             case EMP -> {
                 sujeto1.setNit(sujeto.getNit());
+                sujeto1.setApellido(null);
+                sujeto1.setNumeroDocumento(null);
             }
         }
         return sujeto1;
