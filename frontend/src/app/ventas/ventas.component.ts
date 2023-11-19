@@ -47,7 +47,7 @@ export class VentasComponent {
     this.idCliente = idCli;
 
     this.ventaService.getProductosEnStock().subscribe((data => {
-      this.stock = data;
+       this.stock = data;
     }))
   }
 

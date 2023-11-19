@@ -13,7 +13,7 @@
   <select name="cliente" id="cliente" (change)="guardarIdCliente($event)">
     <option value="" disabled selected>Selecciona un cliente</option>
     <option *ngFor="let opcion of clientes" [value]="opcion.idSujeto">
-      {{opcion.nombre}}
+       {{opcion.nombre}}
     </option>
   </select>
 </div>
