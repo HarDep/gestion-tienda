@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class SujetoDTO {
     private int idSujeto;
     private TipoSujeto tipoSujeto;
-    private String municipio;
+    private MunicipioDTO municipio;
     @NotEmpty @Size(min = 3, max = 50, message = "El nombre debe contener entre 3 y 50 caracteres")
     private String nombre;
     @Size(min = 3, max = 50, message = "El apellido debe contener entre 3 y 50 caracteres")

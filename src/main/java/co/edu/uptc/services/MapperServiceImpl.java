@@ -2,10 +2,7 @@ package co.edu.uptc.services;
 
 import co.edu.uptc.dtos.*;
 import co.edu.uptc.entities.*;
-import co.edu.uptc.repositories.CategoriaProductoRepository;
-import co.edu.uptc.repositories.LoteRepository;
-import co.edu.uptc.repositories.ProductoRepository;
-import co.edu.uptc.repositories.SujetoRepository;
+import co.edu.uptc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +20,8 @@ public class MapperServiceImpl implements MapperService{
     private LoteRepository loteRepository;
     @Autowired
     private SujetoRepository sujetoRepository;
+    @Autowired
+    private MunicipioRepository municipioRepository;
     @Override
     public ProductoProveedorDTO toProductoProveedorDTO(ProductoProveedor prod) {
         SujetoDTO proveedor = toSujetoDTO(prod.getPrimaryKey().getProveedor());
@@ -68,9 +67,10 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public SujetoDTO toSujetoDTO(Sujeto sujeto){
-        String mun = sujeto.getMunicipio() == null ? null : sujeto.getMunicipio().getNombre();
+        Municipio mun = sujeto.getMunicipio() != null ? municipioRepository.findById(sujeto.getMunicipio()
+                .getId()).orElse(new Municipio()) : new Municipio();
         return SujetoDTO.builder().idSujeto(sujeto.getId()).tipoSujeto(sujeto.getTipoSujeto())
-                .municipio(mun).nombre(sujeto.getNombre())
+                .municipio(MunicipioDTO.builder().id(mun.getId()).nombre(mun.getNombre()).build()).nombre(sujeto.getNombre())
                 .apellido(sujeto.getApellido()).telefono(sujeto.getTelefono()).direccion(sujeto.getDireccion())
                 .numeroDoc(sujeto.getNumeroDocumento()).nit(sujeto.getNit()).build();
     }
