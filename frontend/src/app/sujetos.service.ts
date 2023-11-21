@@ -26,4 +26,16 @@ export class SujetosService {
   getProveedores(): Observable<Sujeto[]> {
     return this.httpClient.get<Sujeto[]>(`${this.url}/proveedores`);
   }
+
+  saveSujeto(tipoSujeto: number, idMunicipio: number, idSujeto: number, sujeto: Sujeto): Observable<Sujeto>{
+    return this.httpClient.post<Sujeto>(`${this.url}?idSujeto=${idSujeto}&idMunicipio=${idMunicipio}&tipo=${tipoSujeto}`,sujeto);
+  }
+
+  updateSujeto(){
+
+  }
+
+  deleteSujeto(){
+    
+  }
 }

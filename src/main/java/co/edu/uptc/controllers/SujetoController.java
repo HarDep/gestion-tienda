@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/sujeto")
+@CrossOrigin(origins = {"http://localhost:4200/"})x
 public class SujetoController {
     @Autowired
     private SujetoService sujetoService;

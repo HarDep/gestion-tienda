@@ -1,0 +1,62 @@
+<h2>PERSONAS</h2>
+
+<div>
+    <button class="addCustomer">Agregar cliente</button>
+</div>
+
+<div class="changeTableContainer">
+    <table id="changeTable">
+        <tr>
+            <th>Id</th>
+            <th>Numero documento</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Telefono</th>
+            <th>Municipio</th>
+            <th>Direccion</th>
+            <th>Acciones</th>
+        </tr>
+    
+        <tr>
+            <td>Id</td>
+            <td><input type="text" placeholder="Numero documento"></td>
+            <td><input type="text" placeholder="Nombre"></td>
+            <td><input type="text" placeholder="Apellido"></td>
+            <td><input type="text" placeholder="Telefono"></td>
+            <td><input type="text" placeholder="Municipio"></td>
+            <td><input type="text" placeholder="Direccion"></td>
+            <td><button>Guardar</button></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table id="table">
+        <tr>
+            <th>Id cliente</th>
+            <th>Numero documento</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Telefono</th>
+            <th>Municipio</th>
+            <th>Direccion</th>
+            <th>Acciones</th>
+        </tr>
+
+        <tr *ngFor="let item of clientes; let i = index" [class.filapar]="i % 2 === 0" [class.filaimpar]="i % 2 !== 0">
+            <td>{{item.idSujeto}}</td>
+            <td>{{item.numeroDoc}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.apellido}}</td>
+            <td>{{item.telefono}}</td>
+            <td>{{item.municipio}}</td>
+            <td>{{item.direccion}}</td>
+            <td>
+                <div class="btn-group" role="group">
+                    <button type="button" class="editBtn btn-primary">Editar</button>
+                    <button type="button" class="removeBtn btn-secondary">Eliminar</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
