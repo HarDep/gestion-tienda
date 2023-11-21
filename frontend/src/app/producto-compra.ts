@@ -5,4 +5,7 @@ export class ProductoCompra {
     descripcion:String;
     cantidad:number;
     precio:number;
+    diaVencimiento:number;
+    mesVencimiento:number;
+    anioVencimiento:number;
 }

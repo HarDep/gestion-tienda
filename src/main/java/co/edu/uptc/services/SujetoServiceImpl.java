@@ -4,6 +4,8 @@ import co.edu.uptc.dtos.MunicipioDTO;
 import co.edu.uptc.dtos.SujetoDTO;
 import co.edu.uptc.entities.Municipio;
 import co.edu.uptc.entities.Sujeto;
+import co.edu.uptc.entities.TipoSujeto;
+import co.edu.uptc.exceptions.InvalidRequest;
 import co.edu.uptc.exceptions.InvalidResource;
 import co.edu.uptc.exceptions.ResourceNotFound;
 import co.edu.uptc.repositories.MunicipioRepository;
@@ -55,6 +57,12 @@ public class SujetoServiceImpl implements SujetoService {
 
     @Override
     public Optional<SujetoDTO> update(SujetoDTO sujeto, int idSujeto, int idMunicipio) {
+        List<Sujeto> empleados = repository.findEmployees();
+        if (empleados.stream().anyMatch(emp -> emp.getId() == idSujeto)
+                && sujeto.getTipoSujeto() == TipoSujeto.EMP)
+            throw new InvalidRequest("Actualización",
+                    "se esta actualizando un empleado y los empleados únicamente pueden ser de tipo Persona",
+                    "cambiar a Tipo Empresa");
         validateExists(idSujeto);
         validations(sujeto,idMunicipio);
         repository.findByTelefono(sujeto.getTelefono()).map(suj ->{
@@ -95,6 +103,16 @@ public class SujetoServiceImpl implements SujetoService {
 
     @Override
     public void delete(int id) {
+        List<Sujeto> empleados = repository.findEmployees();
+        if (empleados.stream().anyMatch(emp -> emp.getId() == id))
+            throw new InvalidRequest("Borrar registro",
+                    "no se pueden eliminar los empleados",
+                    "eliminar Empleado");
+        List<Sujeto> suppliers = repository.findSuppliers();
+        if (suppliers.stream().anyMatch(sup -> sup.getId() == id))
+            throw new InvalidRequest("Borrar registro",
+                    "no se pueden eliminar los proveedores",
+                    "eliminar Proveedor");
         validateExists(id);
         repository.deleteById(id);
     }
