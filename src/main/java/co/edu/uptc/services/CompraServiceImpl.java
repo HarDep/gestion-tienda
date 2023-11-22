@@ -50,18 +50,20 @@ public class CompraServiceImpl implements CompraService {
                 .stream().map(prod -> mapperService.toProductoProveedorDTO(prod)).toList();
         LocalDate now = LocalDate.now();
         compra.getProductos().forEach(prod ->{
+            if (prod.getCantidad() <= 0)
+                throw new InvalidResource("Cantidad de Producto","la cantidad no es valida",prod.getCantidad()+ "");
             if(!productoRepository.existsById(prod.getCodigo()))
                 throw new ResourceNotFound("Producto", "id", prod.getCodigo());
             if(now.isBefore(LocalDate.of(prod.getAnioVencimiento(), prod.getMesVencimiento(),
                     prod.getDiaVencimiento())))
-                throw new InvalidResource("Producto", "la fecha de vencimiento ya esta cumplida",
-                        prod.getNombre());
+                throw new InvalidResource("Fecha vencimiento Producto", "la fecha de vencimiento ya esta cumplida",
+                        prod.getAnioVencimiento()+ "/" + prod.getMesVencimiento()+ "/" + prod.getDiaVencimiento());
             productosProv.forEach(prodProv ->{
                 if(prodProv.getCodigoProducto().equals(prod.getCodigo())){
                     if (prod.getPrecio() != prodProv.getPrecio())
-                        throw new InvalidResource("Producto",
+                        throw new InvalidResource("Precio Producto",
                                 "el precio del producto no es el mismo que el registrado en stock",
-                                prod.getNombre());
+                                prod.getPrecio() + "");
                 }
             });
         });

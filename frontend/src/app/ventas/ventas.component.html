@@ -1,21 +1,89 @@
-<h2>Realizar una Venta</h2>
+<h2 class="fw-bolder">Realizar una Venta</h2>
 
-<div class="justify-content-center">
+<div class="justify-content-center mb-3">
     <div class="d-flex flex-column">
         <div class="row d-flex justify-content-center">
-            <div class="col col-md-10 col-sm-10 col-xs-12 cardcard overflow-hidden shadow rounded-4 border-0">
-                jjjf
+            <div class="col col-md-10 col-sm-10 col-xs-12 overflow-hidden shadow rounded-4 border-0 text-wrap">
+
+                <div class="mb-2 mx-3 d-flex justify-content-center">
+                    <select class="mt-2 mb-2" id="" aria-placeholder="Selecccione el empleado para la venta"
+                        (click)="cambiarIdEmp($event)">
+                        <option disabled selected>Selecciona una opci&#243;n</option>
+                        <option *ngFor="let emp of empleados" value={{emp.idSujeto}} >{{emp.nombre}}</option>
+                    </select>
+                    
+                    <select class="mt-2 mb-2 mx-3" id="" aria-placeholder="Selecccione el empleado para la venta"
+                        (click)="cambiarIdCli($event)">
+                        <option disabled selected>Selecciona una opci&#243;n</option>
+                        <option *ngFor="let cli of clientes" value={{cli.idSujeto}} >{{cli.nombre}}</option>
+                    </select>
+                </div>
+
+                <div class="mb-2 mt-2 d-flex justify-content-center" >
+                    <button type="button" class="btn btn-primary" [disabled]="venta.productos.length===0 || !idCliente || !idEpleado"
+                     (click)="guardarVenta()">Guardar Venta</button>
+                </div>
+
+                <div class="alert alert-danger" *ngIf="isError">
+                    {{messageError}}
+                </div>
+
+                
+                <div *ngIf="venta.productos.length > 0">
+                    <div class="d-flex justify-content-center">
+                        <h3 class="fw-bolder mt-2">Productos Seleccionados:</h3>
+                    </div>
+                    <table class="table table-striped mt-2 mb-2">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Codigo</th>
+                                <th>cantidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let prod of venta.productos">
+                                <td>{{prod.nombre}}</td>
+                                <td>{{prod.codigo}}</td>
+                                <td>{{prod.cantidad}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" (click)="eliminarProd(prod.codigo)"
+                                    >Eliminar</button>
+                                    <button type="button" class="btn btn-secondary mx-3" (click)="quitarUno(prod.codigo)"
+                                    >Quitar uno</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
-<div class="justify-content-center">
+<div class="justify-content-center mb-3">
     <div class="d-flex flex-column">
-        <div class="row d-flex justify-content-center">
-            <div class="col col-md-12 col-sm-12 col-xs-12 cardcard overflow-hidden shadow rounded-4 border-0">
-                jsjjs
+        <div class="row d-flex justify-content-center col-md-12 col-sm-12 col-xs-12 overflow-hidden shadow rounded-4 border-0">
+
+            <div class="d-flex justify-content-center">
+                <h3 class="fw-bolder">Productos disponibles:</h3>
             </div>
+            
+            <div class="col col-md-3 col-sm-4 col-xs-6 overflow-hidden shadow rounded-4 border-0 mx-3 mt-3 my-3 mb-3"
+                *ngFor="let prod of stock">
+                <div class="mt-3 mb-3 text-start text-wrap">
+                    <h4 class="fw-bolder"> Producto: {{prod.nombre}}</h4>
+                    <p>Codigo: {{prod.codigo}}</p>
+                    <p>Precio: {{prod.precio}}</p>
+                    <p>Descripcion: {{prod.descripcion}}</p>
+                    <p>Unidades disponibles: {{prod.cantidad}}</p>
+                    <button type="button" class="btn btn-primary" [disabled]="prod.cantidad === 0" 
+                        (click)="addProducto(prod)">Añadir</button>
+                </div>
+            </div>
+        
         </div>
     </div>
 </div>
