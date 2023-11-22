@@ -54,18 +54,20 @@ public class VentaServiceImpl implements VentaService{
         //Verificar cantidad y precio de productos con el stock
         List<ProductoVentaDTO> stock = getStock();
         venta.getProductos().forEach(prod ->{
+            if (prod.getCantidad() <= 0)
+                throw new InvalidResource("Cantidad Producto","la cantidad no es valida",prod.getCantidad()+"");
             if(!productoRepository.existsById(prod.getCodigo()))
                 throw new ResourceNotFound("Producto", "id", prod.getCodigo());
             stock.forEach(stProd ->{
                 if(stProd.getCodigo().equals(prod.getCodigo())){
                     if (prod.getCantidad() > stProd.getCantidad())
-                        throw new InvalidResource("Producto",
+                        throw new InvalidResource("Cantidad Producto",
                                 "la cantidad del producto es mayor al disponible en stock",
-                                prod.getNombre());
+                                prod.getCantidad()+ "");
                     if (prod.getPrecio() != stProd.getPrecio())
-                        throw new InvalidResource("Producto",
+                        throw new InvalidResource("Precio Producto",
                                 "el precio del producto no es el mismo que el registrado en stock",
-                                prod.getNombre());
+                                prod.getPrecio() + "");
                 }
             });
         });
