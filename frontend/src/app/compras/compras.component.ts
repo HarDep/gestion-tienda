@@ -42,6 +42,7 @@ export class ComprasComponent {
   }
 
   mostrarProductos(idProv: number): void {
+    console.log('idProveedor: ' + idProv)
     this.compraService.getProductosProveedor(idProv).subscribe((data => {
       this.productos = data;
     }))
@@ -66,9 +67,18 @@ export class ComprasComponent {
     this.idLote = idLoteSaved;
   }
   guardarIdProveedor(event: any) {
-    var idSujetoSaved: number = event.target.value
+    var idSujetoSaved = this.searchProveedor(event.target.value)
     this.mostrarProductos(idSujetoSaved)
     this.idProveedor = idSujetoSaved;
+  }
+
+  searchProveedor(nameProv: string): number{
+    for(let i = 0; i < this.proveedores.length; i++){
+      if(this.proveedores[i].nombre === nameProv){
+        return this.proveedores[i].idSujeto
+      }
+    }
+    throw Error("Proveedor no encontrado en el metodo searchProveedor de la clase compras.components.ts")
   }
 
   guardarCompra() {

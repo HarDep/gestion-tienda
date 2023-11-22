@@ -1,87 +1,135 @@
-import { Component } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Municipio } from 'app/municipio';
 import { Sujeto } from 'app/sujeto';
 import { SujetosService } from 'app/sujetos.service';
 
 @Component({
   selector: 'app-sujetos',
   templateUrl: './sujetos.component.html',
-  styleUrls: ['./sujetos.component.css']
+  styleUrls: ['./sujetos.component.css'],
 })
+
 export class SujetosComponent {
 
   clientes: Sujeto[];
+  municipios: Municipio[]
   ventanaVisible = false;
+  objToBeChanged: Sujeto = new Sujeto();
+  changeCustomers: boolean = false
+  inEdit = false;
+
+  tipoSujeto: number = 1;
+
+  townSelected: Municipio;
+  typeSujeto: number;
+
+  //general -> tipo, nombre, municipio, telefono, direccion
+  //persona -> tipo, nombre, apellido, documento, municipio, telefono, direccion
+  //empresa -> tipo, nombre, municipio, telefono, direccion, nit
+
+  regexDigits = /^(?!.*\s{2})[a-zA-Z0-9\s]+$/;
+  regexSpaces = /^[a-zA-Z0-9]+$/;
 
   constructor(
     private clienteService: SujetosService,
     private router: Router) { }
 
 
-  ngOnInit(): void {
+  getCliente() {
     this.clienteService.getClientes().subscribe(data => {
       this.clientes = data
     })
-
-    this.clientes = []
-
-    var cliente1 = new Sujeto()
-    cliente1.idSujeto = 1
-    cliente1.tipoSujeto = "cliente"
-    cliente1.municipio = 'Tunja'
-    cliente1.nombre = 'nombre1'
-    cliente1.apellido = 'apellido1'
-    cliente1.telefono = '12345'
-    cliente1.direccion = 'calle 73a'
-    cliente1.numeroDoc = '1234'
-    this.clientes.push(cliente1)
-
-    var cliente2 = new Sujeto()
-    cliente2.idSujeto = 2
-    cliente2.tipoSujeto = "cliente"
-    cliente2.municipio = 'Tunja'
-    cliente2.nombre = 'nombre2'
-    cliente2.apellido = 'apellido2'
-    cliente2.telefono = '12345'
-    cliente2.direccion = 'calle 73a'
-    cliente2.numeroDoc = '5678'
-    this.clientes.push(cliente2)
-
-    var cliente3 = new Sujeto()
-    cliente3.idSujeto = 3
-    cliente3.tipoSujeto = "cliente"
-    cliente3.municipio = 'Tunja'
-    cliente3.nombre = 'nombre3'
-    cliente3.apellido = 'apellido3'
-    cliente3.telefono = '12345'
-    cliente3.direccion = 'calle 73a'
-    cliente3.numeroDoc = '91011'
-    this.clientes.push(cliente3)
-
-    var cliente4 = new Sujeto()
-    cliente4.idSujeto = 4
-    cliente4.tipoSujeto = "cliente"
-    cliente4.municipio = 'Tunja'
-    cliente4.nombre = 'nombre4'
-    cliente4.apellido = 'apellido4'
-    cliente4.telefono = '12345'
-    cliente4.direccion = 'calle 73a'
-    cliente4.numeroDoc = '121314'
-    this.clientes.push(cliente4)
   }
 
-  removeCustomer(cliente: Sujeto){
+  ngOnInit(): void {
+    this.getCliente()
 
+    this.clienteService.getMunicipios().subscribe(data => {
+      this.municipios = data
+    })
   }
 
-  editCustomer(cliente: Sujeto){
-
+  editAddCustomer(customer?: Sujeto) {
+    this.inEdit = customer != null
+    if (this.inEdit) {
+      let index: number = this.clientes.findIndex(cus => cus.idSujeto == customer.idSujeto)
+      this.objToBeChanged = this.clientes[index]
+    }
+    this.changeCustomers = true
   }
 
-  saveCustomer(cliente: Sujeto){
-
+  removeCustomer(idSujeto: number) {
+    try{
+      this.clienteService.deleteSujeto(idSujeto).subscribe(data => {
+        console.log('delete/data: ' + data)
+        this.getCliente()
+        alert("Accion realizada")
+      })
+    }catch(error){
+      alert(error.data.message)
+    }
+    location.reload()
   }
 
+  saveEditCustomer(customer: Sujeto) {
+    try {
+      this.clienteService.updateSujeto(this.tipoSujeto, this.townSelected.id, customer.idSujeto, customer).subscribe(data => {
+        console.log('edit/data: ' + data)
+        this.getCliente()
+        alert("Accion realizada")
+      })
+    } catch (error) {
+      alert(error.data.message)
+    }
+  }
+
+  saveNewCustomer(customer: Sujeto) {
+    try {
+      this.clienteService.saveSujeto(this.tipoSujeto, this.townSelected.id, customer).subscribe(data => {
+        console.log('new/data: ' + data)
+        this.getCliente()
+        alert("Accion realizada")
+      })
+    } catch (error) {
+      alert(error.data.message)
+    }
+  }
+
+  searchTown(nameTown: string): Municipio {
+    let town = new Municipio()
+    for (let i = 0; i < this.municipios.length; i++) {
+      if (this.municipios[i].nombre === nameTown) {
+        town = this.municipios[i]
+        break;
+      }
+    }
+    return town;
+  }
+
+  personType(event: any) {
+    this.tipoSujeto = Number.parseInt(event.target.value)
+  }
+
+  setTownSelected(event: any) {
+    this.townSelected = this.searchTown(event.target.value)
+  }
+
+  saveChanges() {
+    if (this.inEdit) {
+      this.saveEditCustomer(this.objToBeChanged)
+    } else {
+      this.saveNewCustomer(this.objToBeChanged)
+    }
+    this.clearInputs()
+  }
+
+  clearInputs() {
+    this.changeCustomers = false
+    this.objToBeChanged = new Sujeto()
+  }
   /*
   this.compraService.getLotes().subscribe(data => {
       this.lotes = data;
