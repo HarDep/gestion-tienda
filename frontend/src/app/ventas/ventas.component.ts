@@ -68,6 +68,7 @@ export class VentasComponent {
       this.ventaService.saveVenta(this.venta,this.idCliente,this.idEpleado).subscribe(data=>{
         console.log(data);
         this.isError = false;
+        alert('Se guardo la venta correctamente');
       });
     } catch (error) {
       this.isError = true;
