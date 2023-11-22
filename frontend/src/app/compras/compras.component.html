@@ -1,20 +1,55 @@
 <h2>Realizar una Compra</h2>
 
-<div class="justify-content-center">
-    <div class="d-flex flex-column">
-        <div class="row d-flex justify-content-center">
-            <div class="col col-md-10 col-sm-10 col-xs-12 cardcard overflow-hidden shadow rounded-4 border-0">
-                jjjf
-            </div>
-        </div>
-    </div>
+<div class="desplegableItem">
+    <select name="lotes" id="lotes" (change)="guardarIdLote($event)">
+        <option value="" disabled selected>Selecciona un lote</option>
+        <option *ngFor="let opcion of lotes">
+            {{opcion.fecha}}
+        </option>
+    </select>
 </div>
 
-<div class="justify-content-center">
-    <div class="d-flex flex-column">
-        <div class="row d-flex justify-content-center">
-            <div class="col col-md-12 col-sm-12 col-xs-12 cardcard overflow-hidden shadow rounded-4 border-0">
-                jsjjs
+
+<div class="desplegableItem">
+    <select name="proveedor" id="proveedor" (change)="guardarIdProveedor($event)">
+        <option value="" disabled selected>Selecciona un proveedor</option>
+        <option *ngFor="let opcionn of proveedores">
+            {{opcionn.nombre}}
+        </option>
+    </select>
+</div>
+
+
+
+<div class="buyButton">
+    <button type="button" [disabled]="compra.productos.length === 0 || !idLote || !idProveedor"
+        (click)="guardarCompra()">Comprar</button>
+</div>
+<h2>Productos</h2>
+<table id="miTabla">
+    <tr class="products">
+        <th>Codigo Producto</th>
+        <th>Nombre Producto</th>
+        <th>Cantidad Producto</th>
+    </tr>
+
+    <tr *ngFor="let item of compra.productos" class="products">
+        <td>{{item.codigo}}</td>
+        <td>{{item.nombre}}</td>
+        <td>{{item.cantidad}}</td>
+    </tr>
+</table>
+
+<div class="container">
+    <div class="row">
+        <div *ngFor="let item of productos" class="col-md-4">
+            <!-- Contenido de cada celda -->
+            <div class="tarjetaProducto" style="width: 100%;" (click)="guardarProducto(item)">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.nombreProducto}}</h5>
+                    <p class="card-description">{{item.descripcionProducto}}</p>
+                    <p>{{item.codigoProducto}}</p>
+                </div>
             </div>
         </div>
     </div>

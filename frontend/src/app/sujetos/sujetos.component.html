@@ -1,0 +1,110 @@
+<h2>PERSONAS</h2>
+
+<div>
+    <button class="addCustomer" (click)="editAddCustomer()">Agregar cliente</button>
+</div>
+
+<div class="changeTableContainer" *ngIf="changeCustomers">
+    <table id="changeTable">
+        <tr>
+            <th>Tipo persona</th>
+            <th *ngIf="tipoSujeto === 1">Numero documento</th>
+            <th *ngIf="tipoSujeto === 2">NIT</th>
+            <th>Nombre</th>
+            <th *ngIf="tipoSujeto === 1">Apellido</th>
+            <th>Telefono</th>
+            <th>Municipio</th>
+            <th>Direccion</th>
+            <th>Acciones</th>
+        </tr>
+    
+        <tr>
+            <td><select name="proveedor" id="proveedor" (change)="personType($event)">
+                <option value="1">Persona</option>
+                <option value="2">Empresa</option>
+            </select></td>
+            <td *ngIf="tipoSujeto === 1"><input type="text" id="documentNumber" placeholder="Numero documento" [(ngModel)]="objToBeChanged.numeroDoc" minlength="1" maxlength="50" #documentNumber="ngModel" required>
+                <div class="alert alert-danger pb-0 pt-0 mt-3" *ngIf="documentNumber.invalid && (documentNumber.dirty || documentNumber.touched)">
+                    <div *ngIf="documentNumber.errors['required']">Debe llenar numero de documento</div>
+                    <div *ngIf="documentNumber.errors['minlength']">El numero de documento debe tener minimo 1 caracteres</div>
+                    <div *ngIf="documentNumber.errors['maxlength']">El numero de documento no debe tener mas de 50 caracteres</div>
+                </div>
+            </td>
+            <td *ngIf="tipoSujeto === 2"><input type="text" id="NITNumber" placeholder="NIT" [(ngModel)]="objToBeChanged.nit" minlength="1" maxlength="255" #nit="ngModel" required>
+                <div class="alert alert-danger pb-0 pt-0 mt-3" *ngIf="nit.invalid && (nit.dirty || nit.touched)">
+                    <div *ngIf="nit.errors['required']">Debe llenar NIT</div>
+                    <div *ngIf="nit.errors['minlength']">El NIT debe tener minimo 1 caracteres</div>
+                    <div *ngIf="nit.errors['maxlength']">El NIT no debe tener mas de 255 caracteres</div>
+                </div>
+            </td>
+            <td><input type="text" id="name" placeholder="Nombre" [(ngModel)]="objToBeChanged.nombre" minlength="3" maxlength="50" #name="ngModel" required>
+                <div class="alert alert-danger pb-0 pt-0 mt-3" *ngIf="name.invalid && (name.dirty || name.touched)">
+                    <div *ngIf="name.errors['required']">Debe llenar el nombre</div>
+                    <div *ngIf="name.errors['minlength']">El nombre debe tener minimo 3 caracteres</div>
+                    <div *ngIf="name.errors['maxlength']">El nombre no debe tener mas de 50 caracteres</div>
+                </div>
+            </td>
+            <td *ngIf="tipoSujeto === 1"><input type="text" id="lastname" placeholder="Apellido" [(ngModel)]="objToBeChanged.apellido" minlength="3" maxlength="50" #lastName="ngModel" required>
+                <div class="alert alert-danger pb-0 pt-0 mt-3" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+                    <div *ngIf="lastName.errors['required']">Debe llenar el apellido</div>
+                    <div *ngIf="lastName.errors['minlength']">El apellido debe tener minimo 5 caracteres</div>
+                    <div *ngIf="lastName.errors['maxlength']">El apellido no debe tener mas de 20 caracteres</div>
+                </div>
+            </td>
+            <td><input type="text" id="telNumber" placeholder="Telefono" [(ngModel)]="objToBeChanged.telefono" #phoneNumber="ngModel" required minlength="5" maxlength="20" required>
+                <div class="alert alert-danger pb-0 pt-0 mt-3" *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
+                    <div *ngIf="phoneNumber.errors['required']">Debe llenar el telefono</div>
+                    <div *ngIf="phoneNumber.errors['minlength']">El telefono debe tener minimo 5 caracteres</div>
+                    <div *ngIf="phoneNumber.errors['maxlength']">El telefono no debe tener mas de 20 caracteres</div>
+                </div>
+            </td>
+            <td><select name="proveedor" id="proveedor" (change)="setTownSelected($event)">
+                <option value="" disabled selected>Selecciona un municipio</option>
+                <option *ngFor="let item of municipios">
+                    {{item.nombre}}
+                </option>
+            </select></td>
+            <td><input type="text" id="address" placeholder="Direccion" [(ngModel)]="objToBeChanged.direccion" #address="ngModel" required minlength="5" maxlength="50" required>
+                <div class="alert alert-danger pb-0 pt-0 mt-3" *ngIf="address.invalid && (address.dirty || address.touched)">
+                    <div *ngIf="address.errors['required']">Debe llenar la direccion</div>
+                    <div *ngIf="address.errors['minlength']">La direccion debe tener minimo 5 caracteres</div>
+                    <div *ngIf="address.errors['maxlength']">La direccion no debe tener mas de 20 caracteres</div>
+                </div>
+            </td>
+            <td><button (click)="saveChanges()" [disabled]="address.invalid || name.invalid || phoneNumber.invalid">Guardar</button></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table id="table">
+        <tr>
+            <th>Tipo</th>
+            <th>Numero documento</th>
+            <th>NIT</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Telefono</th>
+            <th>Municipio</th>
+            <th>Direccion</th>
+            <th>Acciones</th>
+        </tr>
+
+        <tr *ngFor="let item of clientes; let i = index" [class.filapar]="i % 2 === 0" [class.filaimpar]="i % 2 !== 0">
+            <td>{{item.tipoSujeto}}</td>
+            <td>{{item.numeroDoc? item.numeroDoc:'-'}}</td>
+            <td>{{item.nit? item.nit: '-'}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.apellido? item.apellido: '-'}}</td>
+            <td>{{item.telefono}}</td>
+            <td>{{item.municipio.nombre? item.municipio.nombre: '-'}}</td>
+            <td>{{item.direccion? item.direccion: '-'}}</td>
+            <td>
+                <div class="btn-group" role="group">
+                    <button type="button" class="editBtn btn-primary" (click)="editAddCustomer(item)">Editar</button>
+                    <button type="button" class="removeBtn btn-secondary" (click)="removeCustomer(item.idSujeto)">Eliminar</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

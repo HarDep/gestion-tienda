@@ -23,7 +23,7 @@ export class ComprasService {
 
   getProductosProveedor(idProveedor:number): Observable<ProductosProveedor[]> {
     return this.httpClient.get<ProductosProveedor[]>(`${this.url}/proveedor/${idProveedor}/productos`);
-  }
+  } 
 
   saveCompra(compra:Compra, idLote:number, idProveedor:number): Observable<Compra> {
     return this.httpClient.post<Compra>(`${this.url}?idLote=${idLote}&idProveedor=${idProveedor}`,compra);
