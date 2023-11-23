@@ -34,33 +34,6 @@ export class VentasComponent {
     this.ventaService.getProductosEnStock().subscribe(data=>{
       this.stock = data;
     });
-    /*
-    let s1:Sujeto =  new Sujeto();
-    s1.nombre = 'aaa';
-    s1.idSujeto = 1;
-
-    let s2:Sujeto =  new Sujeto();
-    s2.nombre = 'bbb';
-    s2.idSujeto = 2;
-
-    this.empleados = [s1,s2];
-    this.clientes = [s2,s1];
-
-    let prod1:ProductoVenta = new ProductoVenta();
-    prod1.nombre = 'prod 1';
-    prod1.codigo = 'cod1';
-    prod1.precio = 12.6;
-    prod1.descripcion = 'desc 111';
-    prod1.cantidad = 7;
-    
-    let prod2:ProductoVenta = new ProductoVenta();
-    prod2.nombre = 'prod 2';
-    prod2.codigo = 'cod2';
-    prod2.precio = 10.4;
-    prod2.descripcion = 'desc 22222';
-    prod2.cantidad = 5;
-    this.stock = [prod1, prod2];
-*/
     this.venta.productos = [];
   }
 

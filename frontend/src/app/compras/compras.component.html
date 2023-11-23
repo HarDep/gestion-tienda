@@ -38,6 +38,7 @@
             <th>Nombre Producto</th>
             <th>Cantidad Producto</th>
             <th>Fecha Vencimiento Producto</th>
+            <th>Acciones</th>
         </tr>
     
         <tr *ngFor="let item of compra.productos" class="products">
@@ -45,6 +46,12 @@
             <td>{{item.nombre}}</td>
             <td>{{item.cantidad}}</td>
             <td><input type="date" id="start" name="trip-start" (change)="cambiarFecha(item,$event)"/></td>
+            <td>
+                <button type="button" class="btn btn-danger" (click)="eliminarProd(item.codigo)"
+                >Eliminar</button>
+                <button type="button" class="btn btn-secondary mx-3" (click)="quitarUno(item)"
+                >Quitar uno</button>
+            </td>
         </tr>
     </table>
 

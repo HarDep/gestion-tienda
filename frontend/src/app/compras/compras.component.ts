@@ -98,4 +98,16 @@ export class ComprasComponent {
       this.messageError = e.error.message;
     }});
   }
+
+  eliminarProd(cod:String){
+    let index:number = this.compra.productos.findIndex(prod => prod.codigo === cod);
+    this.compra.productos.splice(index,1);
+  }
+
+  quitarUno(prod:ProductoCompra){
+    prod.cantidad--;
+    if(prod.cantidad === 0){
+      this.eliminarProd(prod.codigo);
+    }
+  }
 }
