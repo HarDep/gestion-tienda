@@ -5,13 +5,11 @@ import co.edu.uptc.dtos.SujetoDTO;
 import co.edu.uptc.dtos.VentaDTO;
 import co.edu.uptc.entities.Producto;
 import co.edu.uptc.entities.ProductoVenta;
+import co.edu.uptc.entities.Stock;
 import co.edu.uptc.entities.Venta;
 import co.edu.uptc.exceptions.InvalidResource;
 import co.edu.uptc.exceptions.ResourceNotFound;
-import co.edu.uptc.repositories.ProductoRepository;
-import co.edu.uptc.repositories.ProductoVentaRepository;
-import co.edu.uptc.repositories.SujetoRepository;
-import co.edu.uptc.repositories.VentaRepository;
+import co.edu.uptc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +28,8 @@ public class VentaServiceImpl implements VentaService{
     private ProductoRepository productoRepository;
     @Autowired
     private ProductoVentaRepository productoVentaRepository;
+    @Autowired
+    private StockRepository stockRepository;
     @Autowired
     private MapperService mapperService;
 
@@ -84,12 +84,11 @@ public class VentaServiceImpl implements VentaService{
      */
     @Override
     public List<ProductoVentaDTO> getStock() {
-        List<ProductoVenta> productos = productoVentaRepository.getStock();
+        List<Stock> productos = stockRepository.getStock();
         return productos.stream().map(prod -> {
-            Producto producto = prod.getPrimaryKey().getProducto();
             //porcentaje adicional en el precio de venta
-            prod.setPrecioProducto(prod.getPrecioProducto() + prod.getPrecioProducto() * 0.15);
-            return mapperService.toProductoVentaDTO(producto,prod);
+            prod.setPrecioProducto(prod.getPrecioProducto() + prod.getPrecioProducto() * 0.2);
+            return mapperService.toProductoVentaDTO(prod);
         }).toList();
     }
 

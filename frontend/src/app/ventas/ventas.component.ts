@@ -89,6 +89,7 @@ export class VentasComponent {
       producto.cantidad = 1;
       prod.cantidad --;
       this.venta.productos.push(producto);
+      console.log(producto.precio);
     } else{
       this.venta.productos[index].cantidad ++;
       prod.cantidad --;

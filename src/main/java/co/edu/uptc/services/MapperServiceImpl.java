@@ -152,4 +152,10 @@ public class MapperServiceImpl implements MapperService{
     public MunicipioDTO toMunicipioDTO(Municipio municipio) {
         return MunicipioDTO.builder().id(municipio.getId()).nombre(municipio.getNombre()).build();
     }
+
+    @Override
+    public ProductoVentaDTO toProductoVentaDTO(Stock stock) {
+        return ProductoVentaDTO.builder().codigo(stock.getCodigo()).precio(stock.getPrecioProducto())
+                .cantidad(stock.getCantidadProducto()).build();
+    }
 }

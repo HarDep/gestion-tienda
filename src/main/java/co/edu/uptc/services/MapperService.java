@@ -19,4 +19,5 @@ public interface MapperService {
     ProductoVentaDTO toProductoVentaDTO(Producto producto, ProductoVenta productoVenta);
     LoteDTO toLoteDTO(Lote lote);
     MunicipioDTO toMunicipioDTO(Municipio municipio);
+    ProductoVentaDTO toProductoVentaDTO(Stock stock);
 }
