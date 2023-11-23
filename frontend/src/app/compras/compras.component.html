@@ -3,7 +3,7 @@
 <div class="desplegableItem">
     <select name="lotes" id="lotes" (change)="guardarIdLote($event)">
         <option value="" disabled selected>Selecciona un lote</option>
-        <option *ngFor="let opcion of lotes">
+        <option *ngFor="let opcion of lotes" value={{opcion.id}}>
             {{opcion.fecha}}
         </option>
     </select>
@@ -13,7 +13,7 @@
 <div class="desplegableItem">
     <select name="proveedor" id="proveedor" (change)="guardarIdProveedor($event)">
         <option value="" disabled selected>Selecciona un proveedor</option>
-        <option *ngFor="let opcionn of proveedores">
+        <option *ngFor="let opcionn of proveedores" value={{opcionn.idSujeto}}>
             {{opcionn.nombre}}
         </option>
     </select>
@@ -25,22 +25,32 @@
     <button type="button" [disabled]="compra.productos.length === 0 || !idLote || !idProveedor"
         (click)="guardarCompra()">Comprar</button>
 </div>
-<h2>Productos</h2>
-<table id="miTabla">
-    <tr class="products">
-        <th>Codigo Producto</th>
-        <th>Nombre Producto</th>
-        <th>Cantidad Producto</th>
-    </tr>
 
-    <tr *ngFor="let item of compra.productos" class="products">
-        <td>{{item.codigo}}</td>
-        <td>{{item.nombre}}</td>
-        <td>{{item.cantidad}}</td>
-    </tr>
-</table>
+<div class="alert alert-danger" *ngIf="isError">
+    {{messageError}}
+</div>
 
-<div class="container">
+<div *ngIf="compra.productos.length > 0">
+    <h2>Productos</h2>
+    <table id="miTabla">
+        <tr class="products">
+            <th>Codigo Producto</th>
+            <th>Nombre Producto</th>
+            <th>Cantidad Producto</th>
+            <th>Fecha Vencimiento Producto</th>
+        </tr>
+    
+        <tr *ngFor="let item of compra.productos" class="products">
+            <td>{{item.codigo}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.cantidad}}</td>
+            <td><input type="date" id="start" name="trip-start" (change)="cambiarFecha(item,$event)"/></td>
+        </tr>
+    </table>
+
+</div>
+
+<div >
     <div class="row">
         <div *ngFor="let item of productos" class="col-md-4">
             <!-- Contenido de cada celda -->

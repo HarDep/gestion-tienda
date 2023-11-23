@@ -60,7 +60,7 @@
             </td>
             <td><select name="proveedor" id="proveedor" (change)="setTownSelected($event)">
                 <option value="" disabled selected>Selecciona un municipio</option>
-                <option *ngFor="let item of municipios">
+                <option *ngFor="let item of municipios" value={{item.id}}>
                     {{item.nombre}}
                 </option>
             </select></td>
@@ -74,6 +74,10 @@
             <td><button (click)="saveChanges()" [disabled]="address.invalid || name.invalid || phoneNumber.invalid">Guardar</button></td>
         </tr>
     </table>
+</div>
+
+<div class="alert alert-danger" *ngIf="messageError!==''">
+    {{messageError}}
 </div>
 
 <div>

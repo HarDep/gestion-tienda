@@ -5,7 +5,7 @@ import { SujetosService } from '../sujetos.service';
 import { Sujeto } from '../sujeto';
 import { ProductoCompra } from '../producto-compra';
 import { ProductosProveedor } from '../productos-proveedor';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Lote } from '../lote';
 import { MapperServiceService } from 'app/mapper-service.service';
 
@@ -22,6 +22,8 @@ export class ComprasComponent {
   idLote: number;
   idProveedor: number;
   productos: ProductosProveedor[];
+  isError:boolean = false;
+  messageError:String = '';
 
   constructor(
     private compraService: ComprasService,
@@ -58,33 +60,42 @@ export class ComprasComponent {
     })
     if (!done) {
       let productoCompra: ProductoCompra = this.mapperService.castProductProvACompra(producto)
+      productoCompra.cantidad = 1;
+      productoCompra.anioVencimiento = -1;
+      productoCompra.mesVencimiento = -1;
+      productoCompra.diaVencimiento = -1;
       this.compra.productos.push(productoCompra);
     }
   }
 
+  cambiarFecha(item:ProductoCompra, event : Event){
+    let elm: HTMLSelectElement = event.target as HTMLSelectElement;
+    let fec = elm.value;
+    item.anioVencimiento = Number.parseInt(fec.split('-')[0]);
+    item.mesVencimiento = Number.parseInt(fec.split('-')[1]);
+    item.diaVencimiento = Number.parseInt(fec.split('-')[2]);
+    console.log(item.anioVencimiento+'/'+item.mesVencimiento+'/'+item.diaVencimiento);
+  }
+
   guardarIdLote(event: any) {
-    var idLoteSaved = event.target.value
+    var idLoteSaved = event.target.value;
     this.idLote = idLoteSaved;
   }
   guardarIdProveedor(event: any) {
-    var idSujetoSaved = this.searchProveedor(event.target.value)
-    this.mostrarProductos(idSujetoSaved)
+    var idSujetoSaved = event.target.value;
     this.idProveedor = idSujetoSaved;
-  }
-
-  searchProveedor(nameProv: string): number{
-    for(let i = 0; i < this.proveedores.length; i++){
-      if(this.proveedores[i].nombre === nameProv){
-        return this.proveedores[i].idSujeto
-      }
-    }
-    throw Error("Proveedor no encontrado en el metodo searchProveedor de la clase compras.components.ts")
+    this.mostrarProductos(this.idProveedor);
   }
 
   guardarCompra() {
-    this.compraService.saveCompra(this.compra, this.idLote, this.idProveedor).subscribe(data => {
+    this.compraService.saveCompra(this.compra, this.idLote, this.idProveedor).subscribe({next: data =>{
       console.log(data);
-    });
-    this.router.navigate(['productos'])
+      this.isError = false;
+      alert('Se guardo la venta correctamente');
+      this.router.navigate(['productos'])
+    }, error: e => {
+      this.isError = true;
+      this.messageError = e.error.message;
+    }});
   }
 }

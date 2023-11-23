@@ -4,6 +4,7 @@ import { Sujeto } from '../sujeto';
 import { SujetosService } from '../sujetos.service';
 import { VentasService } from '../ventas.service';
 import { ProductoVenta } from '../producto-venta';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ventas',
@@ -21,7 +22,7 @@ export class VentasComponent {
   isError:boolean = false;
   messageError:String = '';
 
-  constructor(private sujetoService:SujetosService, private ventaService:VentasService){}
+  constructor(private sujetoService:SujetosService, private ventaService:VentasService,private router: Router){}
 
   ngOnInit(): void{
     this.sujetoService.getClientes().subscribe(data=>{
@@ -59,21 +60,20 @@ export class VentasComponent {
     prod2.descripcion = 'desc 22222';
     prod2.cantidad = 5;
     this.stock = [prod1, prod2];
-    */
+*/
     this.venta.productos = [];
   }
 
   guardarVenta(){
-    try {
-      this.ventaService.saveVenta(this.venta,this.idCliente,this.idEpleado).subscribe(data=>{
+      this.ventaService.saveVenta(this.venta,this.idCliente,this.idEpleado).subscribe({next: data =>{
         console.log(data);
         this.isError = false;
         alert('Se guardo la venta correctamente');
-      });
-    } catch (error) {
-      this.isError = true;
-      this.messageError = error.data.message;
-    }
+        this.router.navigate(['productos'])
+      }, error: e => {
+        this.isError = true;
+        this.messageError = e.error.message;
+      }});
   }
 
 

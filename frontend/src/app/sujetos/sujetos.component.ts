@@ -1,7 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component} from '@angular/core';
 import { Municipio } from 'app/municipio';
 import { Sujeto } from 'app/sujeto';
 import { SujetosService } from 'app/sujetos.service';
@@ -21,10 +18,12 @@ export class SujetosComponent {
   changeCustomers: boolean = false
   inEdit = false;
 
-  tipoSujeto: number = 1;
+  tipoSujeto: number;
 
-  townSelected: Municipio;
+  townSelected: number;
   typeSujeto: number;
+  isError:boolean = false;
+  messageError:String = '';
 
   //general -> tipo, nombre, municipio, telefono, direccion
   //persona -> tipo, nombre, apellido, documento, municipio, telefono, direccion
@@ -35,7 +34,7 @@ export class SujetosComponent {
 
   constructor(
     private clienteService: SujetosService,
-    private router: Router) { }
+    ) { }
 
 
   getCliente() {
@@ -53,60 +52,54 @@ export class SujetosComponent {
   }
 
   editAddCustomer(customer?: Sujeto) {
-    this.inEdit = customer != null
+    this.inEdit = customer ? true: false;
     if (this.inEdit) {
-      let index: number = this.clientes.findIndex(cus => cus.idSujeto == customer.idSujeto)
-      this.objToBeChanged = this.clientes[index]
+      let index: number = this.clientes.findIndex(cus => cus.idSujeto === customer.idSujeto);
+      this.objToBeChanged = this.clientes[index];
     }
-    this.changeCustomers = true
+    this.changeCustomers = true;
   }
 
   removeCustomer(idSujeto: number) {
-    try{
-      this.clienteService.deleteSujeto(idSujeto).subscribe(data => {
-        console.log('delete/data: ' + data)
-        this.getCliente()
-        alert("Accion realizada")
-      })
-    }catch(error){
-      alert(error.data.message)
-    }
-    location.reload()
+    this.clienteService.deleteSujeto(idSujeto).subscribe({next: data =>{
+        console.log(data);
+        this.isError = false;
+        this.getCliente();
+        this.messageError = '';
+      }, error: e => {
+        if(e.status === 200){
+          this.isError = false;
+          this.getCliente();
+          this.messageError = '';
+        } else{
+          this.isError = true;
+          this.messageError = e.error.message;
+        }
+      }});
   }
 
   saveEditCustomer(customer: Sujeto) {
-    try {
-      this.clienteService.updateSujeto(this.tipoSujeto, this.townSelected.id, customer.idSujeto, customer).subscribe(data => {
-        console.log('edit/data: ' + data)
-        this.getCliente()
-        alert("Accion realizada")
-      })
-    } catch (error) {
-      alert(error.data.message)
-    }
+    this.clienteService.updateSujeto(this.tipoSujeto, this.townSelected, customer.idSujeto, customer).subscribe({next: data =>{
+      console.log(data);
+      this.isError = false;
+      this.getCliente();
+      this.messageError = '';
+    }, error: e => {
+      this.isError = true;
+      this.messageError = e.error.message;
+    }});
   }
 
   saveNewCustomer(customer: Sujeto) {
-    try {
-      this.clienteService.saveSujeto(this.tipoSujeto, this.townSelected.id, customer).subscribe(data => {
-        console.log('new/data: ' + data)
-        this.getCliente()
-        alert("Accion realizada")
-      })
-    } catch (error) {
-      alert(error.data.message)
-    }
-  }
-
-  searchTown(nameTown: string): Municipio {
-    let town = new Municipio()
-    for (let i = 0; i < this.municipios.length; i++) {
-      if (this.municipios[i].nombre === nameTown) {
-        town = this.municipios[i]
-        break;
-      }
-    }
-    return town;
+    this.clienteService.saveSujeto(this.tipoSujeto, this.townSelected, customer).subscribe({next: data =>{
+      console.log(data);
+      this.isError = false;
+      this.getCliente();
+      this.messageError = '';
+    }, error: e => {
+      this.isError = true;
+      this.messageError = e.error.message;
+    }});
   }
 
   personType(event: any) {
@@ -114,7 +107,7 @@ export class SujetosComponent {
   }
 
   setTownSelected(event: any) {
-    this.townSelected = this.searchTown(event.target.value)
+    this.townSelected = event.target.value;
   }
 
   saveChanges() {
@@ -130,9 +123,4 @@ export class SujetosComponent {
     this.changeCustomers = false
     this.objToBeChanged = new Sujeto()
   }
-  /*
-  this.compraService.getLotes().subscribe(data => {
-      this.lotes = data;
-    });
-  */
 }

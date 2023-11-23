@@ -54,8 +54,8 @@ public class CompraServiceImpl implements CompraService {
                 throw new InvalidResource("Cantidad de Producto","la cantidad no es valida",prod.getCantidad()+ "");
             if(!productoRepository.existsById(prod.getCodigo()))
                 throw new ResourceNotFound("Producto", "id", prod.getCodigo());
-            if(now.isBefore(LocalDate.of(prod.getAnioVencimiento(), prod.getMesVencimiento(),
-                    prod.getDiaVencimiento())))
+            if(LocalDate.of(prod.getAnioVencimiento(), prod.getMesVencimiento(),
+                    prod.getDiaVencimiento()).isBefore(now))
                 throw new InvalidResource("Fecha vencimiento Producto", "la fecha de vencimiento ya esta cumplida",
                         prod.getAnioVencimiento()+ "/" + prod.getMesVencimiento()+ "/" + prod.getDiaVencimiento());
             productosProv.forEach(prodProv ->{
