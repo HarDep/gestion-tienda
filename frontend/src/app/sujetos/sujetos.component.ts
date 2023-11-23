@@ -39,7 +39,11 @@ export class SujetosComponent {
 
   getCliente() {
     this.clienteService.getClientes().subscribe(data => {
-      this.clientes = data
+      this.clientes = data;
+      let index: number = this.clientes.findIndex(cli => cli.tipoSujeto === 'MEE');
+      if(index !== -1){
+        this.clientes.splice(index,1);
+      }
     })
   }
 

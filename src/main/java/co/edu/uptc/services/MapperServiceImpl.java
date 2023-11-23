@@ -97,8 +97,9 @@ public class MapperServiceImpl implements MapperService{
 
     @Override
     public ProductoCompra toProductoCompra(ProductoCompraDTO prod, int compraId) {
-        LocalDate fechaVencimiento = LocalDate.of(prod.getAnioVencimiento(),prod.getMesVencimiento(),
-                prod.getDiaVencimiento());
+        LocalDate fechaVencimiento = prod.getAnioVencimiento() != -1 && prod.getMesVencimiento() != -1 &&
+                prod.getDiaVencimiento() != -1? LocalDate.of(prod.getAnioVencimiento(),prod.getMesVencimiento(),
+                prod.getDiaVencimiento()) : null;
         Producto producto = Producto.builder().codigo(prod.getCodigo()).build();
         Compra compra = Compra.builder().id(compraId).build();
         ProductoCompraPK primaryKey = ProductoCompraPK.builder().compra(compra).producto(producto).build();

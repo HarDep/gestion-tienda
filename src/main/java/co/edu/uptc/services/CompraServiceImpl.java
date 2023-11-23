@@ -8,6 +8,7 @@ import co.edu.uptc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -54,10 +55,18 @@ public class CompraServiceImpl implements CompraService {
                 throw new InvalidResource("Cantidad de Producto","la cantidad no es valida",prod.getCantidad()+ "");
             if(!productoRepository.existsById(prod.getCodigo()))
                 throw new ResourceNotFound("Producto", "id", prod.getCodigo());
-            if(LocalDate.of(prod.getAnioVencimiento(), prod.getMesVencimiento(),
-                    prod.getDiaVencimiento()).isBefore(now))
-                throw new InvalidResource("Fecha vencimiento Producto", "la fecha de vencimiento ya esta cumplida",
-                        prod.getAnioVencimiento()+ "/" + prod.getMesVencimiento()+ "/" + prod.getDiaVencimiento());
+            if (prod.getAnioVencimiento() != -1 && prod.getMesVencimiento() != -1 && prod.getDiaVencimiento() != -1){
+                try{
+                    LocalDate fecha = LocalDate.of(prod.getAnioVencimiento(), prod.getMesVencimiento(),
+                            prod.getDiaVencimiento());
+                    if(fecha.isBefore(now))
+                        throw new InvalidResource("Fecha vencimiento Producto", "la fecha de vencimiento ya esta cumplida",
+                            prod.getAnioVencimiento()+ "/" + prod.getMesVencimiento()+ "/" + prod.getDiaVencimiento());
+                } catch (DateTimeException ex){
+                    throw new InvalidResource("Fecha Producto","La fecha no es valida"
+                            ,prod.getAnioVencimiento()+ "/" + prod.getMesVencimiento()+ "/" + prod.getDiaVencimiento());
+                }
+            }
             productosProv.forEach(prodProv ->{
                 if(prodProv.getCodigoProducto().equals(prod.getCodigo())){
                     if (prod.getPrecio() != prodProv.getPrecio())

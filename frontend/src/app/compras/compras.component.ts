@@ -71,9 +71,18 @@ export class ComprasComponent {
   cambiarFecha(item:ProductoCompra, event : Event){
     let elm: HTMLSelectElement = event.target as HTMLSelectElement;
     let fec = elm.value;
-    item.anioVencimiento = Number.parseInt(fec.split('-')[0]);
-    item.mesVencimiento = Number.parseInt(fec.split('-')[1]);
-    item.diaVencimiento = Number.parseInt(fec.split('-')[2]);
+    let anio:number = Number.parseInt(fec.split('-')[0]);
+    let mes:number = Number.parseInt(fec.split('-')[1]);
+    let dia:number = Number.parseInt(fec.split('-')[2]);
+    if(!Number.isNaN(anio) && !Number.isNaN(mes) && !Number.isNaN(dia)){
+      item.anioVencimiento = anio;
+      item.mesVencimiento = mes;
+      item.diaVencimiento = dia;
+    }else{
+      item.anioVencimiento = -1;
+      item.mesVencimiento = -1;
+      item.diaVencimiento = -1;
+    }
     console.log(item.anioVencimiento+'/'+item.mesVencimiento+'/'+item.diaVencimiento);
   }
 
